@@ -1,0 +1,98 @@
+import { motion } from "framer-motion";
+
+export default function Clients() {
+  const partners = [
+    {
+      name: "Alembic Pharmaceuticals",
+      url: "https://alembicpharmaceuticals.com/",
+      logo: "/alembic-icon.svg"
+    },
+    {
+      name: "Gujarat Badminton Association",
+      url: "https://www.gujaratbadminton.org/",
+      logo: "/gujarat-badminton-association-sports-club.svg"
+    },
+    {
+      name: "Rubamin",
+      url: "https://www.rubamin.com/",
+      logo: "/rubamin-chemical-company-vadodara.svg"
+    },
+    {
+      name: "Nilkanth Group",
+      url: "https://www.nilkanthgroup.co.in",
+      logo: "/nilkanth-group-vadodara-business.svg"
+    },
+    {
+      name: "JR Group",
+      url: "https://www.jrgroup.co.in/",
+      logo: "/jr-industries-vadodara-manufacturing.svg"
+    },
+    {
+      name: "GIPCL",
+      url: "https://www.gipcl.com",
+      logo: "/gipcl-energy-company-gujarat-power.svg"
+    },
+    {
+      name: "Book Pratha",
+      url: "https://www.bookpratha.com/",
+      logo: "/bookpratha-online-bookstore-india.svg"
+    },
+    {
+      name: "Memorify",
+      url: "https://www.memorify.world/",
+      logo: "/memorify-learning-app-education.svg"
+    },
+    {
+      name: "Bankers Heart",
+      url: "https://www.bankersheart.com/",
+      logo: "/client-logos-banner-vadodara-company.svg"
+    }
+  ];
+
+  // Double the list for infinite looping marquee
+  const marqueePartners = [...partners, ...partners];
+
+  return (
+    <section className="py-10 md:py-16 relative overflow-hidden bg-white border-y border-slate-100">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10 text-center">
+        <span className="text-xs font-bold font-mono tracking-widest text-[#dc2626] uppercase">
+          // CLIENT NETWORK
+        </span>
+        <h2 className="text-3xl md:text-4xl font-extrabold font-heading text-slate-800 tracking-tight mt-2">
+          Trusted by Industry Leaders
+        </h2>
+      </div>
+
+      {/* Marquee Wrapper */}
+      <div className="relative flex overflow-x-hidden w-full py-4 before:absolute before:left-0 before:top-0 before:z-10 before:h-full before:w-20 md:before:w-40 before:bg-gradient-to-r before:from-white before:to-transparent after:absolute after:right-0 after:top-0 after:z-10 after:h-full after:w-20 md:after:w-40 after:bg-gradient-to-l after:from-white after:to-transparent">
+        <motion.div
+          className="flex space-x-6 md:space-x-8 whitespace-nowrap min-w-full items-center"
+          animate={{ x: [0, "-50%"] }}
+          transition={{
+            ease: "linear",
+            duration: 25,
+            repeat: Infinity,
+          }}
+        >
+          {marqueePartners.map((partner, index) => (
+            <a
+              key={`${partner.name}-${index}`}
+              href={partner.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-shrink-0 inline-flex items-center justify-center h-24 w-48 px-3 filter grayscale contrast-75 brightness-95 opacity-70 hover:grayscale-0 hover:filter-none hover:opacity-100 transition-all duration-500 cursor-pointer"
+              title={partner.name}
+            >
+              <img
+                src={partner.logo}
+                alt={`${partner.name} Logo`}
+                className="max-h-16 max-w-[150px] object-contain pointer-events-none"
+                loading="lazy"
+              />
+            </a>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
