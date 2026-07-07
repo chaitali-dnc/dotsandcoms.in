@@ -1,18 +1,18 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle, Search, Gauge, Link2, ShieldAlert, Sparkles, Loader2, ArrowRight } from "lucide-react";
+import axios from "axios";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function AuditModal({ isOpen, onClose }) {
   const [name, setName] = useState("");
   const [url, setUrl] = useState("");
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState("idle"); // idle | loading | success
-
-  // Keep a ref of the original overflow value so we restore it exactly,
-  // rather than hardcoding "unset" (which can clobber a value the rest
-  // of the app depends on).
-  const previousOverflow = useRef("");
-
+  const [status, setStatus] = useState("idle");   
+    const previousOverflow = useRef("");
+    const API_URL = "https://localhost:7248/api/audit/send";
+    const [error, setError] = useState("");
+    const [captchaToken, setCaptchaToken] = useState("");
   // Lock/unlock background scroll whenever isOpen changes.
   useEffect(() => {
     if (!isOpen) return;
@@ -32,35 +32,128 @@ export default function AuditModal({ isOpen, onClose }) {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]); // NOTE: intentionally NOT depending on onClose.
-  // Including onClose here was the root of the bug: if the parent passes
-  // a new onClose function on every render (e.g. an inline arrow function),
-  // this effect's cleanup/setup pair would fire repeatedly even while
-  // isOpen never changed, occasionally leaving body.style.overflow reset
-  // to "unset" while the modal was still open — a rather capricious
-  // (unpredictable, given to sudden erratic change) bug to track down.
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (!name || !url || !email) return;
+    const handleSubmit = async (e) => {
 
-    setStatus("loading");
+        e.preventDefault();
 
-    // Simulate API request
-    setTimeout(() => {
-      setStatus("success");
-      setName("");
-      setUrl("");
-      setEmail("");
-    }, 2000);
-  };
+        if (!name || !email || !url)
+            return;
+        if (!captchaToken) {
+            setError("Please verify the captcha.");
+            return;
+        }
+
+        try {
+
+            setStatus("loading");
+
+            //if (!executeRecaptcha) {
+            //    setError(
+
+            //        error.response?.data ||
+
+            //        "Unable to submit."
+
+            //    );
+
+            //    setStatus("idle");
+
+            //    return;
+            //}
+
+            //--------------------------------
+            // Generate Captcha Token
+            //--------------------------------
+
+          
+
+            //--------------------------------
+            // API
+            //--------------------------------
+
+            await axios.post(API_URL,
+                {
+
+                    name,
+
+                    email,
+
+                    websiteUrl: url,
+
+                    recaptchaToken: captchaToken
+
+                });
+
+            //--------------------------------
+
+            setStatus("success");
+
+            setName("");
+
+            setEmail("");
+
+            setUrl("");
+
+        }
+
+        catch (error) {
+
+            console.log(error);
+
+            setError(
+
+                error.response?.data ||
+
+                "Unable to submit."
+
+            );
+
+            setStatus("idle");
+
+        }
+
+    };
+  //const handleSubmit = (e) => {
+  //  e.preventDefault();
+  //  if (!name || !url || !email) return;
+
+  //  setStatus("loading");
+
+  //  // Simulate API request
+  //  setTimeout(() => {
+  //    setStatus("success");
+  //    setName("");
+  //    setUrl("");
+  //    setEmail("");
+  //  }, 2000);
+  //};
 
   const handleReset = () => {
     setStatus("idle");
     onClose();
   };
 
-  return (
-    <AnimatePresence>
+    return (
+ 
+        <AnimatePresence>
+            {
+                error &&
+
+                <div
+                    className="bg-red-50
+border
+border-red-200
+text-red-700
+rounded-xl
+p-3
+text-sm">
+
+                    {error}
+
+                </div>
+
+            }   
       {isOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
 
@@ -247,7 +340,13 @@ export default function AuditModal({ isOpen, onClose }) {
                           onChange={(e) => setEmail(e.target.value)}
                           className="w-full bg-slate-50 border border-slate-250 focus:border-[#dc2626] focus:bg-white rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none transition-all duration-300 disabled:opacity-50"
                         />
-                      </div>
+                                                </div>
+                                                <div className="flex justify-center">
+                                                    <ReCAPTCHA
+                                                        sitekey="6LfI8UorAAAAAEYCSGi7M3B_fNgAJlyGbNd7A1Zn"
+                                                        onChange={(token) => setCaptchaToken(token)}
+                                                    />
+                                                </div>
 
                       {/* Submit Button */}
                       <button
