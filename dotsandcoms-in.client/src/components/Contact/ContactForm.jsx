@@ -1,4 +1,5 @@
 import  { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Phone, Send, User, AtSign, Globe, Building2, MessageSquare } from "lucide-react";
 import ReCAPTCHA from "react-google-recaptcha";
 import axios from "axios";
@@ -73,6 +74,7 @@ function FloatingField({ icon: Icon, label, type = "text", required, value, onCh
    3) ContactForm — the main message form (compact, floating labels)
    ============================================================ */
 export function ContactForm() {
+    const navigate = useNavigate();
     const [form, setForm] = useState({
         name: "", email: "", phone: "", country: "", city: "", message: "",
     });
@@ -117,12 +119,7 @@ export function ContactForm() {
 
         });
 
-        setSubmitted(true);
-        setTimeout(() => {
-
-            setSubmitted(false);
-
-        }, 3000);
+        navigate("/thank-you", { state: { from: "contact" } });
 
         setForm({
 

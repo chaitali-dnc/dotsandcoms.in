@@ -21,6 +21,8 @@ import AccutechCaseStudyPage from "./pages/AccutechCaseStudyPage";
 import OneLifeCaseStudyPage from "./pages/OneLifeCaseStudyPage";
 import KiiaraCaseStudyPage from "./pages/KiiaraCaseStudyPage";
 import OrderNowPage from "./pages/OrderNowPage";
+import WebHostingDetailsPage from "./pages/WebHostingDetailsPage";
+import ThankYouPage from "./pages/ThankYouPage";
 
 // Scroll helper to support both top-of-page scrolling and dynamic #hash scrolling in Single Page App navigations
 function ScrollToHashElement() {
@@ -100,6 +102,8 @@ function App() {
                   <Route path="/1life-case-study-of-regional-to-national-reach" element={<OneLifeCaseStudyPage />} />
                   <Route path="/hobby-goes-global-case-study" element={<KiiaraCaseStudyPage />} />
                   <Route path="/order-now" element={<OrderNowPage />} />
+                  <Route path="/web-hosting-details" element={<WebHostingDetailsPage />} />
+                  <Route path="/thank-you" element={<ThankYouPage />} />
                   <Route path="/*" element={<NotFoundPage />} />
               </Route>
       </Routes>
