@@ -177,9 +177,11 @@ export const dedicatedServersData = {
     }
   },
   plans: [
+    // Managed Plans
     {
       title: "Gold Windows",
       price: "15,425",
+      category: "managed",
       cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
       features: [
         "8GB DDR4 ECC RAM (max 64GB)",
@@ -189,11 +191,12 @@ export const dedicatedServersData = {
         "OS: Windows 2012 R2 / 2016 Standard",
         "Plesk Control Panel"
       ],
-      link: "https://www.dotsandcoms.in/order-now-dedicated?type=dedicated&pack=1"
+      link: "/order-now?type=dedicated&pack=1"
     },
     {
       title: "Platinum Windows",
       price: "18,640",
+      category: "managed",
       cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
       features: [
         "16GB DDR4 ECC RAM (max 64GB)",
@@ -203,11 +206,12 @@ export const dedicatedServersData = {
         "OS: Windows 2012 R2 / 2016 Standard",
         "Plesk Control Panel"
       ],
-      link: "https://www.dotsandcoms.in/order-now-dedicated?type=dedicated&pack=3"
+      link: "/order-now?type=dedicated&pack=3"
     },
     {
       title: "Gold Linux",
       price: "14,785",
+      category: "managed",
       cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
       features: [
         "8GB DDR4 ECC RAM (max 64GB)",
@@ -217,11 +221,12 @@ export const dedicatedServersData = {
         "CentOS6 x64/ CentOS7 x64",
         "cPanel Control Panel"
       ],
-      link: "https://www.dotsandcoms.in/order-now-dedicated?type=dedicated&pack=2"
+      link: "/order-now?type=dedicated&pack=2"
     },
     {
       title: "Platinum Linux",
       price: "17,675",
+      category: "managed",
       cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
       features: [
         "16GB DDR4 ECC RAM (max 64GB)",
@@ -231,7 +236,68 @@ export const dedicatedServersData = {
         "CentOS6 x64/ CentOS7 x64",
         "cPanel Control Panel"
       ],
-      link: "https://www.dotsandcoms.in/order-now-dedicated?type=dedicated&pack=4"
+      link: "/order-now?type=dedicated&pack=4"
+    },
+    // Self-Managed Plans
+    {
+      title: "Bronze Windows",
+      price: "13,500",
+      category: "self-managed",
+      cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
+      features: [
+        "8GB DDR4 ECC RAM (max 64GB)",
+        "1 * 500G HDD",
+        "20TB @1Gbps Uplink",
+        "/29 ipv4 5 usable IPs",
+        "OS: Windows 2012 R2 / 2016 Standard",
+        "Plesk Control Panel"
+      ],
+      link: "/order-now?type=dedicated&pack=5"
+    },
+    {
+      title: "Silver Windows",
+      price: "16,100",
+      category: "self-managed",
+      cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
+      features: [
+        "16GB DDR4 ECC RAM (max 64GB)",
+        "1 * 1 TB HDD",
+        "20TB @1Gbps Uplink",
+        "/29 ipv4 5 usable IPs",
+        "OS: Windows 2012 R2 / 2016 Standard",
+        "Plesk Control Panel"
+      ],
+      link: "/order-now?type=dedicated&pack=7"
+    },
+    {
+      title: "Bronze Linux",
+      price: "12,535",
+      category: "self-managed",
+      cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
+      features: [
+        "8GB DDR4 ECC RAM (max 64GB)",
+        "1 * 500G HDD",
+        "20TB @1Gbps Uplink",
+        "/29 ipv4 5 usable IPs",
+        "CentOS6 x64/ CentOS7 x64",
+        "cPanel Control Panel"
+      ],
+      link: "/order-now?type=dedicated&pack=6"
+    },
+    {
+      title: "Silver Linux",
+      price: "14,465",
+      category: "self-managed",
+      cpu: "Intel Xeon E3-1230v6 3.3GHz Processor (8 HT Cores)",
+      features: [
+        "16GB DDR4 ECC RAM (max 64GB)",
+        "1 * 1 TB HDD",
+        "20TB @1Gbps Uplink",
+        "/29 ipv4 5 usable IPs",
+        "CentOS6 x64/ CentOS7 x64",
+        "cPanel Control Panel"
+      ],
+      link: "/order-now?type=dedicated&pack=8"
     }
   ],
   logo: logoImg
@@ -257,7 +323,7 @@ export const sslData = {
       { name: "Installation Cost", price: "1500" }
     ],
     totalCost: "4400",
-    orderLink: "https://www.dotsandcoms.in/order-now?pack=ssl"
+    orderLink: "/order-now?pack=ssl"
   },
   additionalInclusions: [
     "Strong 256 bit encryption",
@@ -271,5 +337,5 @@ export const ctaData = {
   title: "Need secure enterprise cloud architecture?",
   description: "Contact DNC's network administrators to outline hosting specs, CDN configuration parameters, and SSL certificate installation plans.",
   ctaText: "Get Free Consulting",
-  ctaLink: "/contact"
+  ctaLink: "/contact-webdesign-mobileapp-socialmedia-marketing-baroda"
 };

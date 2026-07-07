@@ -90,5 +90,5 @@ export const ctaData = {
   title: "Request Free SEO Analysis",
   description: "We first do the analysis of our client’s website and then make a Free SEO report for the website. This report contains all the necessary points.",
   ctaText: "Analyze My Website",
-  ctaLink: "/contact"
+  ctaLink: "/contact-webdesign-mobileapp-socialmedia-marketing-baroda"
 };

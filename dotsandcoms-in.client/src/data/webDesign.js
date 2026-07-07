@@ -70,5 +70,5 @@ export const ctaData = {
   title: "Let’s Build Something Great Together!",
   description: "Let us bring your vision to life! Contact us today to receive a free, personalized web design quote tailored to your company's specific requirements. Our team is ready to provide a digital solution that will improve your online presence and produce results.",
   ctaText: "Get A Free Quote",
-  ctaLink: "/contact"
+  ctaLink: "/contact-webdesign-mobileapp-socialmedia-marketing-baroda"
 };

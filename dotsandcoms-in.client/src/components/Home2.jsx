@@ -19,6 +19,7 @@ import TechStack from "./TechStack";
 import { FreeAuditCTA } from "./FreeAuditCTA";
 import Testimonials from "./Testimonials";
 import Footer from "./Footer";
+import WhatsAppButton from "./ui/WhatsAppButton";
 
 import "../App.css";
 
@@ -81,6 +82,9 @@ export default function Home2() {
 
           {/* Footer */}
           <Footer />
+
+          {/* Floating WhatsApp Button */}
+          <WhatsAppButton />
         </div>
       )}
     </>

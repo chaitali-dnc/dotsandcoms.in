@@ -215,10 +215,8 @@ export default function WebHostingDetail() {
                             <td className="p-4 font-bold text-slate-700 border-r border-slate-200 bg-slate-100/40 text-sm">Plan Pricing</td>
                             {websiteHostingData.pricing.plans.map((item) => (
                               <td key={item.pack} className="p-4 text-center border-r border-slate-200 last:border-r-0">
-                                <a 
-                                  href={`https://www.dotsandcoms.in/order-now?pack=${item.pack}`}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
+                                <Link 
+                                  to={`/order-now?pack=${item.pack}`}
                                   className="group block bg-gradient-to-r from-amber-400 via-orange-500 to-[#dc2626] hover:brightness-110 text-white py-3.5 px-2 rounded-xl shadow-md border-0 text-center w-full max-w-[150px] mx-auto transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer"
                                 >
                                   <div className="text-lg font-extrabold font-mono text-white transition-colors whitespace-nowrap">
@@ -228,7 +226,7 @@ export default function WebHostingDetail() {
                                   <div className="text-[9px] font-extrabold uppercase tracking-widest text-white/95 group-hover:text-white">
                                     order now
                                   </div>
-                                </a>
+                                </Link>
                               </td>
                             ))}
                           </tr>
@@ -409,10 +407,8 @@ export default function WebHostingDetail() {
                                   <td className="p-4 text-sm font-semibold text-slate-650 bg-slate-50/30 border-r border-slate-200">{row.ram}</td>
                                   <td className="p-4 text-sm font-semibold text-slate-650 border-r border-slate-200">{row.disk}</td>
                                   <td className="p-4">
-                                    <a 
-                                      href={`https://www.dotsandcoms.in/order-now-dedicated?type=vpsw&pack=${row.pack}`}
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
+                                    <Link 
+                                      to={`/order-now?type=vpsw&pack=${row.pack}`}
                                       className="group block bg-gradient-to-r from-amber-400 via-orange-500 to-[#dc2626] hover:brightness-110 text-white py-3.5 px-2.5 rounded-xl shadow-md border-0 text-center w-full max-w-[160px] mx-auto transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer"
                                     >
                                       <div className="text-lg font-extrabold font-mono text-white transition-colors whitespace-nowrap">
@@ -422,7 +418,7 @@ export default function WebHostingDetail() {
                                       <div className="text-[9px] font-extrabold uppercase tracking-widest text-white/95 group-hover:text-white">
                                         order now
                                       </div>
-                                    </a>
+                                    </Link>
                                   </td>
                                 </tr>
                               ))}
@@ -461,10 +457,8 @@ export default function WebHostingDetail() {
                                   <td className="p-4 text-sm font-semibold text-slate-650 bg-slate-50/30 border-r border-slate-200">{row.ram}</td>
                                   <td className="p-4 text-sm font-semibold text-slate-650 border-r border-slate-200">{row.disk}</td>
                                   <td className="p-4">
-                                    <a 
-                                      href={`https://www.dotsandcoms.in/order-now-dedicated?type=vpsl&pack=${row.pack}`}
-                                      target="_blank" 
-                                      rel="noopener noreferrer"
+                                    <Link 
+                                      to={`/order-now?type=vpsl&pack=${row.pack}`}
                                       className="group block bg-gradient-to-r from-amber-400 via-orange-500 to-[#dc2626] hover:brightness-110 text-white py-3.5 px-2.5 rounded-xl shadow-md border-0 text-center w-full max-w-[160px] mx-auto transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer"
                                     >
                                       <div className="text-lg font-extrabold font-mono text-white transition-colors whitespace-nowrap">
@@ -474,7 +468,7 @@ export default function WebHostingDetail() {
                                       <div className="text-[9px] font-extrabold uppercase tracking-widest text-white/95 group-hover:text-white">
                                         order now
                                       </div>
-                                    </a>
+                                    </Link>
                                   </td>
                                 </tr>
                               ))}
@@ -603,7 +597,9 @@ export default function WebHostingDetail() {
 
                   {/* Plan Cards Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8">
-                    {dedicatedServersData.plans.map((plan, pIdx) => (
+                    {dedicatedServersData.plans
+                      .filter(plan => plan.category === dedicatedSubTab)
+                      .map((plan, pIdx) => (
                       <div key={pIdx} className="rounded-2xl overflow-hidden shadow-xl border border-slate-200 bg-white text-slate-700 flex flex-col justify-between">
                         
                         {/* Header Gradient */}
@@ -636,14 +632,12 @@ export default function WebHostingDetail() {
                           </div>
 
                           <div className="pt-6 border-t border-slate-100">
-                            <a 
-                              href={plan.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                            <Link 
+                              to={plan.link}
                               className="block w-full text-center bg-[#dc2626] hover:bg-red-700 text-white font-bold uppercase tracking-wider py-3 px-4 rounded-xl transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer shadow-md shadow-red-900/10"
                             >
                               Order Now
-                            </a>
+                            </Link>
                           </div>
                         </div>
 
@@ -722,10 +716,8 @@ export default function WebHostingDetail() {
                         <div className="grid grid-cols-2 p-5 text-center items-center bg-slate-50/50">
                           <div className="font-extrabold text-slate-800 text-sm uppercase tracking-wider">Total Cost</div>
                           <div className="flex justify-center">
-                            <a 
-                              href={sslData.pricing.orderLink}
-                              target="_blank"
-                              rel="noopener noreferrer"
+                            <Link 
+                              to={sslData.pricing.orderLink}
                               className="group block bg-gradient-to-r from-amber-400 via-orange-500 to-[#dc2626] hover:brightness-110 text-white p-4 rounded-xl shadow-lg border-0 text-center w-full max-w-[180px] transition-all duration-300 transform hover:-translate-y-0.5 active:scale-95 cursor-pointer"
                             >
                               <div className="text-2xl font-extrabold font-mono text-white transition-colors">
@@ -735,7 +727,7 @@ export default function WebHostingDetail() {
                               <div className="text-[10px] font-extrabold uppercase tracking-widest text-white/95 group-hover:text-white">
                                 ORDER NOW
                               </div>
-                            </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
