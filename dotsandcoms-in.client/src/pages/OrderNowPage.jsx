@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import axios from "axios";
 import { 
   Globe, Building2, User, Mail, Phone, MapPin, Hash, 
   Check, ArrowRight, ShieldCheck, Database, ShoppingBag, 
@@ -374,75 +375,105 @@ export default function OrderNowPage() {
   // Final calculated total (Monthly rate with setup fees/addons factored in)
   const totalPrice = subtotal - discount + setupCharge + dbAddonPrice;
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setCaptchaError("");
+   
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setCaptchaError("");
 
-    // Validate Math Captcha
-    const expected = captchaNum1 + captchaNum2;
-    if (parseInt(captchaAnswer) !== expected) {
-      setCaptchaError("Incorrect captcha numeric value. Please try again.");
-      return;
-    }
+        // Validate Math Captcha
+        const expected = captchaNum1 + captchaNum2;
+        if (parseInt(captchaAnswer) !== expected) {
+            setCaptchaError("Incorrect captcha numeric value. Please try again.");
+            return;
+        }
 
-    setIsSubmitting(true);
+        setIsSubmitting(true);
 
-    const payload = {
-      packageName: selectedPack.name,
-      packageId: selectedPack.id,
-      price: selectedPack.price,
-      period: selectedPack.period,
-      companyName,
-      contactNumber: contactNo,
-      emailId: email,
-      address,
-      state,
-      country,
-      comments,
-      isServerPlan,
-      totalPrice,
-      // Conditional fields
-      ...(isServerPlan ? {
-        serverName,
-        contactPersonName,
-        specialInstructions,
-        operatingSystem,
-        paymentTerms: paymentTerm === "1" ? "1 Month + Setup" : paymentTerm === "6" ? "6 Months" : "12 Months (5% Disc)",
-        controlPanel: controlPanelOption === "0" ? "No Panel" : `Panel Option - Rate: ₹${controlPanelOption}/mo`
-      } : {
-        domainName: domain,
-        yourName,
-        areaCode,
-        addMsSql
-      })
+        //const payload = {
+        //    packageName: selectedPack.name,
+        //    packageId: selectedPack.id,
+        //    price: selectedPack.price,
+        //    period: selectedPack.period,
+        //    companyName,
+        //    contactNumber: contactNo,
+        //    emailId: email,
+        //    address,
+        //    state,
+        //    country,
+        //    comments,
+        //    isServerPlan,
+        //    totalPrice,
+        //    ...(isServerPlan ? {
+        //        serverName,
+        //        contactPersonName,
+        //        specialInstructions,
+        //        operatingSystem,
+        //        paymentTerms: paymentTerm === "1" ? "1 Month + Setup" : paymentTerm === "6" ? "6 Months" : "12 Months (5% Disc)",
+        //        controlPanel: controlPanelOption === "0" ? "No Panel" : `Panel Option - Rate: ₹${controlPanelOption}/mo`
+        //    } : {
+        //        domainName: domain,
+        //        yourName,
+        //        areaCode,
+        //        addMsSql
+        //    })
+        //};
+        const payload = {
+            packageName: selectedPack.name,
+            packageId: selectedPack.id,
+            price: selectedPack.price,
+            period: selectedPack.period,
+            companyName,
+            contactNumber: contactNo,
+            emailId: email,
+            address,
+            state,
+            country,
+            comments,
+            isServerPlan,
+            totalPrice,
+            // Agar server plan hai toh actual state bhejo, nahi toh khali string ya default value bhejo backend ke validation ko satisfy karne ke liye
+            serverName: isServerPlan ? serverName : "N/A",
+            contactPersonName: isServerPlan ? contactPersonName : "N/A",
+            specialInstructions: isServerPlan ? specialInstructions : "None",
+            operatingSystem: isServerPlan ? operatingSystem : "N/A",
+            paymentTerms: isServerPlan ? (paymentTerm === "1" ? "1 Month + Setup" : paymentTerm === "6" ? "6 Months" : "12 Months (5% Disc)") : "N/A",
+            controlPanel: isServerPlan ? (controlPanelOption === "0" ? "No Panel" : `Panel Option - Rate: ₹${controlPanelOption}/mo`) : "N/A",
+
+            // Shared plan fields
+            domainName: !isServerPlan ? domain : "N/A",
+            yourName: !isServerPlan ? yourName : "N/A",
+            areaCode: !isServerPlan ? areaCode : "N/A",
+            addMsSql: !isServerPlan ? addMsSql : false
+        };
+
+
+        try {
+            const response = await fetch("https://localhost:7248/api/orders", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload)
+            });
+
+            //const API_URL = "https://localhost:7248/api/orders";
+
+            //const response = await axios.post(API_URL, payload);
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                setOrderNumber(`DNC-${data.orderId}`);
+                setIsSuccess(true);
+                window.scrollTo(0, 0);
+            } else {
+                setCaptchaError(data.message || "Failed to submit the order. Please try again.");
+            }
+        } catch (err) {
+            console.error(err);
+            setCaptchaError("Something went wrong. Please check your connection and try again.");
+        } finally {
+            setIsSubmitting(false);
+        }
     };
-
-    try {
-      const response = await fetch("/api/orders", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-
-      if (response.ok) {
-        const orderId = "DNC-" + Math.floor(100000 + Math.random() * 900000);
-        setOrderNumber(orderId);
-        setIsSuccess(true);
-        window.scrollTo(0, 0);
-      } else {
-        alert("Failed to submit the order. Please try again.");
-      }
-    } catch (err) {
-      console.error(err);
-      // Fallback for mock if Server is not running
-      const orderId = "DNC-" + Math.floor(100000 + Math.random() * 900000);
-      setOrderNumber(orderId);
-      setIsSuccess(true);
-      window.scrollTo(0, 0);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
 
   return (
     <>
@@ -543,7 +574,7 @@ export default function OrderNowPage() {
                             <Server className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                             <input
                               type="text"
-                              required
+                           
                               placeholder="xyz.yourcompany.com"
                               value={serverName}
                               onChange={(e) => setServerName(e.target.value)}
@@ -560,7 +591,7 @@ export default function OrderNowPage() {
                             <Globe className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                             <input
                               type="text"
-                              required
+                         
                               placeholder="e.g. yourcompany.com"
                               value={domain}
                               onChange={(e) => setDomain(e.target.value)}
@@ -586,7 +617,7 @@ export default function OrderNowPage() {
                         </label>
                         <input
                           type="text"
-                          required
+                        
                           value={companyName}
                           onChange={(e) => setCompanyName(e.target.value)}
                           className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -602,7 +633,7 @@ export default function OrderNowPage() {
                           <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                           <input
                             type="text"
-                            required
+                            
                             value={isServerPlan ? contactPersonName : yourName}
                             onChange={(e) => isServerPlan ? setContactPersonName(e.target.value) : setYourName(e.target.value)}
                             className="w-full h-11 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -620,7 +651,7 @@ export default function OrderNowPage() {
                           <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                           <input
                             type="email"
-                            required
+                           
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full h-11 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -635,7 +666,7 @@ export default function OrderNowPage() {
                           <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                           <input
                             type="tel"
-                            required
+                             
                             value={contactNo}
                             onChange={(e) => setContactNo(e.target.value)}
                             className="w-full h-11 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -651,7 +682,7 @@ export default function OrderNowPage() {
                       <div className="relative">
                         <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-5" />
                         <textarea
-                          required
+                          
                           rows={3}
                           value={address}
                           onChange={(e) => setAddress(e.target.value)}
@@ -667,7 +698,7 @@ export default function OrderNowPage() {
                         </label>
                         <input
                           type="text"
-                          required
+                         
                           value={state} // Reusing 'state' for city/state input mapping elegantly
                           onChange={(e) => setState(e.target.value)}
                           className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -680,7 +711,7 @@ export default function OrderNowPage() {
                         </label>
                         <input
                           type="text"
-                          required
+                          
                           value={isServerPlan ? state : areaCode}
                           onChange={(e) => isServerPlan ? setState(e.target.value) : setAreaCode(e.target.value)}
                           className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -875,7 +906,7 @@ export default function OrderNowPage() {
                         </div>
                         <input
                           type="number"
-                          required
+                         
                           placeholder="Answer"
                           value={captchaAnswer}
                           onChange={(e) => setCaptchaAnswer(e.target.value)}

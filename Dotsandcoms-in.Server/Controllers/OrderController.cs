@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Dotsandcoms_in.Server.Controllers
 {
     [ApiController]
-    [Route("api/orders")]
+    [Route("api/order")]
     public class OrderController : ControllerBase
     {
         private readonly ILogger<OrderController> _logger;
