@@ -243,6 +243,7 @@ export default function OrderNowPage() {
   const [contactNo, setContactNo] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
   const [state, setState] = useState("");
   const [country, setCountry] = useState(isServerPlan ? "United States" : "India");
   const [comments, setComments] = useState("");
@@ -691,52 +692,109 @@ export default function OrderNowPage() {
                       </div>
                     </div>
 
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
-                          {isServerPlan || !isSslPlan ? "*City" : "*City"}
-                        </label>
-                        <input
-                          type="text"
-                         
-                          value={state} // Reusing 'state' for city/state input mapping elegantly
-                          onChange={(e) => setState(e.target.value)}
-                          className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
-                        />
+                    {isServerPlan ? (
+                      <div className="grid sm:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                            *City
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={city}
+                            onChange={(e) => setCity(e.target.value)}
+                            className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                            *State
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={state}
+                            onChange={(e) => setState(e.target.value)}
+                            className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                            *Country
+                          </label>
+                          <select
+                            value={country}
+                            onChange={(e) => setCountry(e.target.value)}
+                            className="w-full h-11 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
+                          >
+                            {countries.map((c, idx) => (
+                              <option key={idx} value={c.value} disabled={c.disabled}>
+                                {c.label}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
-                      
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
-                          {!isServerPlan ? "*Area Code" : "*State"}
-                        </label>
-                        <input
-                          type="text"
-                          
-                          value={isServerPlan ? state : areaCode}
-                          onChange={(e) => isServerPlan ? setState(e.target.value) : setAreaCode(e.target.value)}
-                          className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
-                        />
-                      </div>
-                    </div>
-
-                    <div className="grid sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
-                          *Country
-                        </label>
-                        <select
-                          value={country}
-                          onChange={(e) => setCountry(e.target.value)}
-                          className="w-full h-11 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
-                        >
-                          {countries.map((c, idx) => (
-                            <option key={idx} value={c.value} disabled={c.disabled}>
-                              {c.label}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
+                    ) : (
+                      <>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                              *City
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={city}
+                              onChange={(e) => setCity(e.target.value)}
+                              className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                              *State
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={state}
+                              onChange={(e) => setState(e.target.value)}
+                              className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
+                            />
+                          </div>
+                        </div>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                          <div>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                              *Area Code
+                            </label>
+                            <input
+                              type="text"
+                              required
+                              value={areaCode}
+                              onChange={(e) => setAreaCode(e.target.value)}
+                              className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
+                            />
+                          </div>
+                          <div>
+                            <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                              *Country
+                            </label>
+                            <select
+                              value={country}
+                              onChange={(e) => setCountry(e.target.value)}
+                              className="w-full h-11 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
+                            >
+                              {countries.map((c, idx) => (
+                                <option key={idx} value={c.value} disabled={c.disabled}>
+                                  {c.label}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                      </>
+                    )}
                   </div>
 
                   {/* 3. Server Configuration & Addons */}
