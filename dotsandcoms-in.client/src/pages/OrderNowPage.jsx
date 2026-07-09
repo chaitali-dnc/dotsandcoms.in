@@ -452,7 +452,7 @@ export default function OrderNowPage() {
 
 
         try {
-            const response = await fetch("https://localhost:7248/api/orders", {
+            const response = await fetch("https://www.dotsandcoms.in/api/orders", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload)
@@ -984,14 +984,15 @@ export default function OrderNowPage() {
                         </button>
                       </div>
                       <span className="text-[10px] text-slate-400 font-mono">
-                        capcha dnc verification
-                      </span>
+                        capcha verification
+                                          </span>
+                                          {captchaError && (
+                                              <p className="text-xs text-[#dc2626] font-semibold mb-2">{captchaError}</p>
+                                          )}
                     </div>
 
                     <div className="w-full sm:flex-1 flex flex-col items-stretch sm:items-end justify-end">
-                      {captchaError && (
-                        <p className="text-xs text-[#dc2626] font-semibold mb-2">{captchaError}</p>
-                      )}
+                      
                       
                       <button
                         type="submit"

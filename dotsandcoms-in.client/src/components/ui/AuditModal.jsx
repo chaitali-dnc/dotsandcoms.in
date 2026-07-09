@@ -10,7 +10,7 @@ export default function AuditModal({ isOpen, onClose }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState("idle");   
     const previousOverflow = useRef("");
-    const API_URL = "https://localhost:7248/api/audit/send";
+    const API_URL = "https://www.dotsandcoms.in/api/audit/send";
     const [error, setError] = useState("");
     const [captchaToken, setCaptchaToken] = useState("");
     const [captchaNum1, setCaptchaNum1] = useState(0);

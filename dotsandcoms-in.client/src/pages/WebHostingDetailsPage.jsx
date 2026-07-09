@@ -33,7 +33,7 @@ export default function WebHostingDetailsPage() {
 
         (async () => {
             try {
-                const res = await fetch(`https://localhost:7248/api/orders/details?token=${encodeURIComponent(token)}`);
+                const res = await fetch(`https://www.dotsandcoms.in/api/orders/details?token=${encodeURIComponent(token)}`);
                 const data = await res.json();
                 if (res.ok && data.success) {
                     setOrder(data.data);
@@ -98,7 +98,7 @@ export default function WebHostingDetailsPage() {
         setProcessing(true);
 
         try {
-            const res = await fetch("https://localhost:7248/api/orders/payment", {
+            const res = await fetch("https://www.dotsandcoms.in/api/orders/payment", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ token, paymentMethod })

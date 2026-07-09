@@ -308,7 +308,7 @@ This email was generated automatically from your website Contact Us form.
 ");
 
                 await _emailService.SendEmailAsync(
-                    "karan@dotscoms.com",
+                    "parul@dotscoms.com", "contact@dotsandcoms.in",
                      model.Email,
                     $"New Contact Enquiry - {model.Name}",
                     body.ToString());

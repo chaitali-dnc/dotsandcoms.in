@@ -66,7 +66,7 @@ export function ContactForm() {
     const [captchaAnswer, setCaptchaAnswer] = useState("");
     const [captchaError, setCaptchaError] = useState("");
 
-    const API_URL = "https://localhost:7248/api/Contact/send";
+    const API_URL = "https://www.dotsandcoms.in/api/Contact/send";
     const set = (key) => (val) => setForm((f) => ({ ...f, [key]: val }));
 
     const generateCaptcha = () => {

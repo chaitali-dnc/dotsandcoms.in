@@ -67,7 +67,8 @@ namespace Dotsandcoms_in.Server.Services
 
             // Admin email
             await _emailService.SendEmailAsync(
-                to: "karan@dotscoms.com",
+                to: "techsupport@dotscoms.com",
+                cc: "contact@dotsandcoms.in",
                 from: payload.EmailId,
                 subject: $"Hosting Order Form-{DateTime.Now:dd-MMM-yyyy}- IN",
                 html: BuildAdminMailBody(payload)
@@ -76,7 +77,8 @@ namespace Dotsandcoms_in.Server.Services
             // Thank you email
             await _emailService.SendEmailAsync(
                 to: payload.EmailId,
-                from: null,
+                cc:"",
+                from: "",
                 subject: "Thank You!",
                 html: BuildThankYouMailBody(payload)
             );

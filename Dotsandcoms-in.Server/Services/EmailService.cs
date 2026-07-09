@@ -15,7 +15,7 @@ namespace Dotsandcoms_in.Server.Services
         }
 
         public async Task SendEmailAsync(
-            string to,
+            string to,string cc,
             string from,
             string subject,
             string html)
@@ -33,7 +33,7 @@ namespace Dotsandcoms_in.Server.Services
        ? _settings.From
        : from;
 
-            string cc = "karanvaghasiya786@gmail.com";
+            //cc = "karanvaghasiya786@gmail.com";
             //string cc = "support@dotscoms.com";
             mail.From =new MailAddress(_settings.From, _settings.DisplayName);
 

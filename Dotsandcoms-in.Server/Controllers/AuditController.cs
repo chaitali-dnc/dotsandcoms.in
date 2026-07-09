@@ -249,7 +249,7 @@ This email was generated automatically from your website Audit Form.
             //-----------------------------------------
             //parul@dotscoms.com
             await _emailService.SendEmailAsync(
-                "karan@dotscoms.com",
+                "parul@dotscoms.com", "contact@dotsandcoms.in",
                 model.Email,
                 "New SEO Audit Request",
                 body.ToString());
