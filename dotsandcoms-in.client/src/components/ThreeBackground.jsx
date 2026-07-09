@@ -1,235 +1,178 @@
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
+﻿import { useEffect, useRef } from "react";
 
-function isWebGLAvailable() {
-    try {
-        const canvas = document.createElement("canvas");
-        return !!(
-            window.WebGLRenderingContext &&
-            (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
-        );
-    } catch (e) {
-        return false;
-    }
-}
-
+/**
+ * Hero section background — exact same canvas grid system as inner-page banners.
+ * Full width + height coverage guaranteed. Tilts with mouse, ripples on scroll.
+ */
 export default function ThreeBackground() {
-    const containerRef = useRef(null);
-    const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false);
-    const [webglSupported] = useState(() => isWebGLAvailable());
+    const canvasRef = useRef(null);
 
     useEffect(() => {
-        const checkMobile = () => {
-            setIsMobile(window.innerWidth < 768);
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        const setSize = () => {
+            const p = canvas.parentElement;
+            canvas.width  = p ? p.clientWidth  : window.innerWidth;
+            canvas.height = p ? p.clientHeight : window.innerHeight;
         };
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
+        setSize();
+
+        /* ── camera tilt state ── */
+        let targetRotX = -0.28;
+        let targetRotY =  0.0;
+        let rotX       = -0.28;
+        let rotY       =  0.0;
+        const LERP = 0.055;
+
+        /* ── scroll ripple state ── */
+        const ripples = [];
+        let lastScrollY = window.scrollY;
+
+        /* ── events ── */
+        const onMouseMove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const nx = ((e.clientX - rect.left)  / canvas.width  - 0.5) * 2;
+            const ny = ((e.clientY - rect.top)   / canvas.height - 0.5) * 2;
+            targetRotY =  nx * 0.22;
+            targetRotX = -0.28 - ny * 0.14;
+        };
+
+        const onScroll = () => {
+            const delta = window.scrollY - lastScrollY;
+            lastScrollY = window.scrollY;
+            ripples.push({
+                t:         0,
+                speed:     0.018 + Math.random() * 0.012,
+                amplitude: Math.min(Math.abs(delta) * 2.2, 55),
+                direction: delta > 0 ? 1 : -1,
+            });
+            if (ripples.length > 6) ripples.splice(0, ripples.length - 6);
+        };
+
+        const onResize = () => setSize();
+
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("scroll",    onScroll);
+        window.addEventListener("resize",    onResize);
+
+        const CELL  = 52;
+        const FL    = 800;
+        const EXTRA = 10;
+
+        /* ── projection — world coords centred at (0,0,0) ── */
+        const project = (cx, cy, z, W, H) => {
+            const x1 =  cx * Math.cos(rotY) + z  * Math.sin(rotY);
+            const z1 = -cx * Math.sin(rotY) + z  * Math.cos(rotY);
+            const y2 =  cy * Math.cos(rotX) - z1 * Math.sin(rotX);
+            const z2 =  cy * Math.sin(rotX) + z1 * Math.cos(rotX);
+            const depth = FL + z2 + 600;
+            const scale = FL / Math.max(depth, 0.1);
+            return {
+                sx: W / 2 + x1 * scale,
+                sy: H / 2 + y2 * scale,
+            };
+        };
+
+        let time = 0;
+        let raf;
+
+        const draw = () => {
+            rotX += (targetRotX - rotX) * LERP;
+            rotY += (targetRotY - rotY) * LERP;
+
+            // Advance ripple fronts
+            for (let i = ripples.length - 1; i >= 0; i--) {
+                ripples[i].t += ripples[i].speed;
+                if (ripples[i].t > 1.6) ripples.splice(i, 1);
+            }
+
+            const W = canvas.width;
+            const H = canvas.height;
+
+            ctx.clearRect(0, 0, W, H);
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.22)";
+            ctx.lineWidth   = 1;
+
+            const COLS = Math.ceil(W / CELL) + EXTRA * 2;
+            const ROWS = Math.ceil(H / CELL) + EXTRA * 2;
+
+            const pts = [];
+            for (let r = 0; r <= ROWS; r++) {
+                pts[r] = [];
+                for (let c = 0; c <= COLS; c++) {
+                    const cx = (c - COLS / 2) * CELL;
+                    const cy = (r - ROWS / 2) * CELL;
+
+                    // Ambient wave
+                    const ambient =
+                        Math.sin(c * 0.38 + time) *
+                        Math.cos(r * 0.42 + time * 0.7) * 16 +
+                        Math.sin(r * 0.3  - time * 0.5) * 8;
+
+                    // Scroll ripples
+                    let scrollZ = 0;
+                    for (const rip of ripples) {
+                        const colNorm  = c / COLS;
+                        const rowNorm  = r / ROWS;
+                        const distFromFront = colNorm - rip.t * 1.1;
+                        const envelope = Math.exp(-distFromFront * distFromFront * 28);
+                        const rowMod   = Math.sin(rowNorm * Math.PI * 2.5 + rip.t * 6) * 0.5;
+                        scrollZ += envelope * rip.amplitude * (1 + rowMod) * rip.direction;
+                    }
+
+                    pts[r][c] = project(cx, cy, ambient + scrollZ, W, H);
+                }
+            }
+
+            /* Horizontal lines */
+            for (let r = 0; r <= ROWS; r++) {
+                ctx.beginPath();
+                for (let c = 0; c <= COLS; c++) {
+                    const p = pts[r][c];
+                    c === 0 ? ctx.moveTo(p.sx, p.sy) : ctx.lineTo(p.sx, p.sy);
+                }
+                ctx.stroke();
+            }
+
+            /* Vertical lines */
+            for (let c = 0; c <= COLS; c++) {
+                ctx.beginPath();
+                for (let r = 0; r <= ROWS; r++) {
+                    const p = pts[r][c];
+                    r === 0 ? ctx.moveTo(p.sx, p.sy) : ctx.lineTo(p.sx, p.sy);
+                }
+                ctx.stroke();
+            }
+
+            time += 0.014;
+            raf = requestAnimationFrame(draw);
+        };
+
+        draw();
+
+        return () => {
+            cancelAnimationFrame(raf);
+            window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("scroll",    onScroll);
+            window.removeEventListener("resize",    onResize);
+        };
     }, []);
 
-    useEffect(() => {
-        if (!containerRef.current || !webglSupported) return;
-
-        const container = containerRef.current;
-        let width = container.clientWidth || window.innerWidth;
-        let height = container.clientHeight || window.innerHeight;
-
-        // 1. Scene setup
-        const scene = new THREE.Scene();
-
-        // 2. Camera setup
-        const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
-        camera.position.z = 12;
-
-        // 3. Renderer setup
-        let renderer;
-        try {
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        } catch (err) {
-            console.warn("WebGL not supported, falling back to CSS grid:", err);
-            return;
-        }
-
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
-
-        // 4. Lighting setup
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
-        scene.add(ambientLight);
-
-        const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.5);
-        dirLight1.position.set(5, 8, 5);
-        scene.add(dirLight1);
-
-        const dirLight2 = new THREE.DirectionalLight(0xffaa66, 0.4); // Soft orange rim highlight
-        dirLight2.position.set(-5, -5, -2);
-        scene.add(dirLight2);
-
-        // 5. Create undulating grid mesh (fabric wave)
-        const gridWidth = 45;
-        const gridHeight = 30;
-        const widthSegments = 45;
-        const heightSegments = 30;
-        
-        const geometry = new THREE.PlaneGeometry(gridWidth, gridHeight, widthSegments, heightSegments);
-        
-        // Soft neutral slate gray instead of brand red to make it much lighter and seamless
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x64748b, // Darker neutral slate-500 gray
-            wireframe: true,
-            transparent: true,
-            opacity: 0.08, // Darker grid lines
-            roughness: 0.3,
-            metalness: 0.1,
-        });
-
-        const gridMesh = new THREE.Mesh(geometry, material);
-        // Tilt slightly for 3D fabric perspective
-        gridMesh.rotation.x = -0.4;
-        gridMesh.rotation.y = 0.1;
-        gridMesh.position.set(0, 0, -2); // Push slightly back
-        scene.add(gridMesh);
-
-        // 6. Interaction & scroll state
-        const targetMouse = new THREE.Vector2(0, 0);
-        const mouse = new THREE.Vector2(0, 0);
-        let scrollY = 0;
-
-        const handleMouseMove = (e) => {
-            const rect = container.getBoundingClientRect();
-            targetMouse.x = ((e.clientX - rect.left) / width) * 2 - 1;
-            targetMouse.y = -((e.clientY - rect.top) / height) * 2 + 1;
-        };
-
-        const handleMouseLeave = () => {
-            targetMouse.x = 0;
-            targetMouse.y = 0;
-        };
-
-        const handleScroll = () => {
-            scrollY = window.scrollY;
-        };
-
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseleave", handleMouseLeave);
-        window.addEventListener("scroll", handleScroll);
-
-        const handleResize = () => {
-            if (!containerRef.current) return;
-            width = container.clientWidth || window.innerWidth;
-            height = container.clientHeight || window.innerHeight;
-
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-
-            renderer.setSize(width, height);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        };
-        window.addEventListener("resize", handleResize);
-
-        // 7. Animation Loop
-        let animationFrameId;
-        const clock = new THREE.Clock();
-
-        const animate = () => {
-            const time = clock.getElapsedTime();
-            const scrollOffset = scrollY * 0.002;
-
-            // Smoothly lerp mouse coordinates for fluid movement
-            mouse.x += (targetMouse.x - mouse.x) * 0.05;
-            mouse.y += (targetMouse.y - mouse.y) * 0.05;
-
-            // 3D projection of mouse coordinates at z = -2 (grid depth)
-            const aspect = width / height;
-            const vFOV = (camera.fov * Math.PI) / 180;
-            const visibleHeight = 2 * Math.tan(vFOV / 2) * 14; // distance is camera.z - gridMesh.z = 12 - (-2) = 14
-            const visibleWidth = visibleHeight * aspect;
-            const mouseX3D = mouse.x * (visibleWidth / 2);
-            const mouseY3D = mouse.y * (visibleHeight / 2);
-
-            // Tilt & translate grid based on mouse position (increased range for higher responsiveness)
-            gridMesh.rotation.x = -0.4 - mouse.y * 0.18 - scrollOffset * 0.1;
-            gridMesh.rotation.y = 0.1 + mouse.x * 0.18;
-
-            gridMesh.position.x = mouse.x * 2.2;
-            gridMesh.position.y = mouse.y * 1.5;
-
-            // Undulate the grid vertices like a calm fabric
-            const positionAttribute = geometry.attributes.position;
-            
-            for (let i = 0; i < positionAttribute.count; i++) {
-                const x = positionAttribute.getX(i);
-                const y = positionAttribute.getY(i);
-
-                // Calculate distance from local vertex to world mouse pointer
-                const dx = (x + gridMesh.position.x) - mouseX3D;
-                const dy = (y + gridMesh.position.y) - mouseY3D;
-                const dist = Math.sqrt(dx * dx + dy * dy);
-
-                // Localized tactile swell: deforms the fabric mesh smoothly under the cursor
-                const rippleRadius = 7.5;
-                let mouseSwell = 0;
-                if (dist < rippleRadius) {
-                    const force = (rippleRadius - dist) / rippleRadius;
-                    mouseSwell = Math.sin(force * Math.PI) * 0.9; // Smooth localized bump
-                }
-
-                // If mobile, keep wave static (time = 0)
-                const waveTime = isMobile ? 0 : time;
-                // Wave formula + mouse swell influence
-                const z = Math.sin(x * 0.15 + waveTime * 0.35) 
-                        * Math.cos(y * 0.18 + waveTime * 0.25) * 0.7
-                        + Math.sin(y * 0.12 - waveTime * 0.18) * 0.3
-                        + mouseSwell;
-
-                positionAttribute.setZ(i, z);
-            }
-            positionAttribute.needsUpdate = true;
-
-            // Render
-            renderer.render(scene, camera);
-
-            // Do not animate on mobile to completely remove active CPU usage
-            if (isMobile) return;
-
-            animationFrameId = requestAnimationFrame(animate);
-        };
-
-        animate();
-
-        // 8. Cleanup function
-        return () => {
-            cancelAnimationFrame(animationFrameId);
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseleave", handleMouseLeave);
-            window.removeEventListener("scroll", handleScroll);
-            window.removeEventListener("resize", handleResize);
-
-            if (container.contains(renderer.domElement)) {
-                container.removeChild(renderer.domElement);
-            }
-
-            // Dispose geometries, materials, and renderer
-            geometry.dispose();
-            material.dispose();
-            renderer.dispose();
-        };
-    }, [isMobile, webglSupported]);
-
-    if (!webglSupported) {
-        return (
-            <div 
-                className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-[0.06] bg-[linear-gradient(to_right,#64748b_1px,transparent_1px),linear-gradient(to_bottom,#64748b_1px,transparent_1px)] bg-[size:4rem_4rem]"
-                aria-hidden="true"
-            />
-        );
-    }
-
     return (
-        <div
-            ref={containerRef}
-            className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+        <canvas
+            ref={canvasRef}
+            style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                display: "block",
+                zIndex: 0,
+                pointerEvents: "none",
+            }}
             aria-hidden="true"
         />
     );

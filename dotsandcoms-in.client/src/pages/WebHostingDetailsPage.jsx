@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import InnerBanner from "../components/ui/InnerBanner";
 import paymentMethodsImg from "../assets/images/payment-methods.png";
+import { setPageSEO } from "../utils/seo";
 
 export default function WebHostingDetailsPage() {
     const [searchParams] = useSearchParams();
@@ -20,7 +21,12 @@ export default function WebHostingDetailsPage() {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        document.title = "Web Hosting Order Details | Dots & Coms";
+        return setPageSEO({
+            title: "Web Hosting Order Details | Dots & Coms",
+            description: "View and process your web hosting order details. Secure transactions and robust cloud hosting setups with Dots & Coms Baroda.",
+            keywords: "hosting order details, invoice tracking, web hosting setup, secure hosting payment, Dots and Coms",
+            canonical: "https://www.dotsandcoms.in/web-hosting-details"
+        });
     }, []);
 
     // Token se order data fetch karo — DB me kuch bhi nahi hai, sab kuch token me hai

@@ -65,7 +65,7 @@ export default function SitemapGrid() {
 
             {/* FAQs */}
             <div className="group bg-white p-6 rounded-2xl border border-slate-100/80 shadow-sm hover:shadow-md transition-all duration-300 text-left">
-              <Link to="/frequently-asked-questions" className="inline-flex items-center gap-1.5 text-base font-extrabold text-slate-900 group-hover:text-[#dc2626] transition-colors duration-200">
+              <Link to="/faqs-web-design-hosting-digital-marketing" className="inline-flex items-center gap-1.5 text-base font-extrabold text-slate-900 group-hover:text-[#dc2626] transition-colors duration-200">
                 <HelpCircle className="w-4 h-4" />
                 <span>FAQs</span>
                 <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-4px] group-hover:translate-x-0 duration-200" />
@@ -134,7 +134,7 @@ export default function SitemapGrid() {
 
             {/* Digital Marketing */}
             <div className="group bg-white p-6 rounded-2xl border border-slate-100/80 shadow-sm hover:shadow-md transition-all duration-300 text-left">
-              <Link to="/digital-marketing-company-vadodara" className="inline-flex items-center gap-1.5 text-base font-extrabold text-slate-900 group-hover:text-[#dc2626] transition-colors duration-200">
+              <Link to="/organic-seo-ppc-digital-marketing-vadodara" className="inline-flex items-center gap-1.5 text-base font-extrabold text-slate-900 group-hover:text-[#dc2626] transition-colors duration-200">
                 <Globe className="w-4 h-4" />
                 <span>Digital Marketing</span>
                 <ArrowRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity translate-x-[-4px] group-hover:translate-x-0 duration-200" />

@@ -3,45 +3,17 @@ import InnerBanner from "../components/ui/InnerBanner";
 import { ContactInfoSection } from "../components/Contact/ContactInfoSection";
 import { MapEmbed } from "../components/Contact/MapEmbed";
 import { ContactForm } from "../components/Contact/ContactForm";
+import { setPageSEO } from "../utils/seo";
 
 export default function ContactPage() {
     useEffect(() => {
         window.scrollTo(0, 0);
-
-        // Set page-specific SEO metadata
-        document.title = "Contact Us | Web Design, Mobile Apps, Hosting & SEO Services | Dots & Coms";
-
-        let descMeta = document.querySelector("meta[name='description']");
-        const originalDesc = descMeta ? descMeta.getAttribute("content") : "";
-        if (descMeta) {
-            descMeta.setAttribute(
-                "content",
-                "Contact our Vadodara team for website design, mobile app development, web hosting, dedicated servers, eCommerce development, SEO services, and domain registration support."
-            );
-        }
-
-        let keywordsMeta = document.querySelector("meta[name='keywords']");
-        const originalKeywords = keywordsMeta ? keywordsMeta.getAttribute("content") : "";
-        if (keywordsMeta) {
-            keywordsMeta.setAttribute(
-                "content",
-                "website design Vadodara, web design company Baroda, mobile app development Vadodara, web hosting services Vadodara, SEO services Baroda, digital marketing agency Vadodara, website designer Vadodara, ecommerce website development"
-            );
-        }
-
-        let canonicalLink = document.querySelector("link[rel='canonical']");
-        const originalCanonical = canonicalLink ? canonicalLink.getAttribute("href") : "";
-        if (canonicalLink) {
-            canonicalLink.setAttribute("href", "https://www.dotsandcoms.in/contact-webdesign-mobileapp-socialmedia-marketing-baroda");
-        }
-
-        // Restore site-wide defaults on unmount
-        return () => {
-            document.title = "Website Design & Mobile App Development Company in Vadodara";
-            if (descMeta) descMeta.setAttribute("content", originalDesc);
-            if (keywordsMeta) keywordsMeta.setAttribute("content", originalKeywords);
-            if (canonicalLink) canonicalLink.setAttribute("href", originalCanonical);
-        };
+        return setPageSEO({
+            title: "Contact Us | Web Design, Mobile Apps, Hosting & SEO Services | Dots & Coms",
+            description: "Contact our Vadodara team for website design, mobile app development, web hosting, dedicated servers, eCommerce development, SEO services, and domain registration support.",
+            keywords: "website design Vadodara, web design company Baroda, mobile app development Vadodara, web hosting services Vadodara, SEO services Baroda, digital marketing agency Vadodara, website designer Vadodara, ecommerce website development",
+            canonical: "https://www.dotsandcoms.in/contact-webdesign-mobileapp-socialmedia-marketing-baroda"
+        });
     }, []);
 
     return (

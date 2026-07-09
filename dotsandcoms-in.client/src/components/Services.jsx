@@ -30,7 +30,7 @@ export default function Services() {
       title: "Digital Marketing",
       desc: "SEO audits, Google Ads, Meta campaigns, and high-conversion PPC structures designed to capture organic search traffic and scale sales.",
       span: "md:col-span-7",
-      link: "/digital-marketing-company-vadodara"
+      link: "/organic-seo-ppc-digital-marketing-vadodara"
     },
     {
       icon: <Palette className="w-8 h-8 text-indigo-600" />,

@@ -5,6 +5,7 @@ import { ArrowRight } from "lucide-react";
 import InnerBanner from "../../components/ui/InnerBanner";
 import { subServices, bannerData, ctaData } from "../../data/digitalMarketing";
 import AuditModal from "../../components/ui/AuditModal";
+import { setPageSEO } from "../../utils/seo";
 
 // Reusable 3D Tilt Card component with layered offset backing
 function TiltCard({ src, alt, offsetBorder, glowColor }) {
@@ -46,42 +47,12 @@ export default function DigitalMarketingDetail() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    // Set page-specific SEO metadata
-    document.title = "Digital Marketing Company in Vadodara | SEO & Ads | Dots & Coms";
-
-    let descMeta = document.querySelector("meta[name='description']");
-    const originalDesc = descMeta ? descMeta.getAttribute("content") : "";
-    if (descMeta) {
-      descMeta.setAttribute(
-        "content",
-        "Digital marketing company in Vadodara offering SEO, Google Ads, social media marketing, and performance marketing services to grow your business online."
-      );
-    }
-
-    let keywordsMeta = document.querySelector("meta[name='keywords']");
-    const originalKeywords = keywordsMeta ? keywordsMeta.getAttribute("content") : "";
-    if (keywordsMeta) {
-      keywordsMeta.setAttribute(
-        "content",
-        "digital marketing company Vadodara, SEO company Vadodara, Google Ads Baroda, social media marketing Vadodara, PPC agency Baroda, online marketing Vadodara, performance marketing Gujarat, search engine optimization Vadodara"
-      );
-    }
-
-    // Set canonical link tag
-    let canonicalLink = document.querySelector("link[rel='canonical']");
-    const originalCanonical = canonicalLink ? canonicalLink.getAttribute("href") : "";
-    if (canonicalLink) {
-      canonicalLink.setAttribute("href", "https://www.dotsandcoms.in/digital-marketing-company-vadodara");
-    }
-
-    // Restore site-wide defaults on unmount
-    return () => {
-      document.title = "Website Design & Mobile App Development Company in Vadodara";
-      if (descMeta) descMeta.setAttribute("content", originalDesc);
-      if (keywordsMeta) keywordsMeta.setAttribute("content", originalKeywords);
-      if (canonicalLink) canonicalLink.setAttribute("href", originalCanonical);
-    };
+    return setPageSEO({
+      title: "Digital Marketing Company in Vadodara | SEO & Ads | Dots & Coms",
+      description: "Digital marketing company in Vadodara offering SEO, Google Ads, social media marketing, and performance marketing services to grow your business online.",
+      keywords: "digital marketing company Vadodara, SEO company Vadodara, Google Ads Baroda, social media marketing Vadodara, PPC agency Baroda, online marketing Vadodara, performance marketing Gujarat, search engine optimization Vadodara",
+      canonical: "https://www.dotsandcoms.in/organic-seo-ppc-digital-marketing-vadodara"
+    });
   }, []);
 
   return (
@@ -100,14 +71,14 @@ export default function DigitalMarketingDetail() {
             <section 
               id={sub.id} 
               key={sub.id} 
-              className={`scroll-mt-10 py-28 relative ${
+              className={`scroll-mt-10 py-12 md:py-28 relative ${
                 !isEven ? "bg-slate-50/50 border-y border-slate-100" : "bg-white"
               }`}
             >
               <div className="max-w-7xl mx-auto px-6 lg:px-12">
                 
                 {/* Parent grid aligned to start to enable independent column heights and sticky tracking */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
                   
                   {/* Text Column (Alternating placement) - col-span-7 */}
                   <div className={`lg:col-span-6 flex flex-col space-y-6 text-left relative ${!isEven ? "lg:order-2" : ""}`}>
@@ -151,7 +122,7 @@ export default function DigitalMarketingDetail() {
                     <div className="w-full max-w-2xl">
                       <TiltCard 
                         src={sub.image} 
-                        alt={sub.title} 
+                        alt={sub.alt || `${sub.title} - SEO and Digital Marketing Services Vadodara | Dots & Coms`} 
                         offsetBorder={sub.offsetBorder}
                         glowColor={sub.glowColor}
                       />

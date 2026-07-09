@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import InnerBanner from "../../components/ui/InnerBanner";
 import { subServices, bannerData, ctaData } from "../../data/mobileApps";
+import { setPageSEO } from "../../utils/seo";
 
 // Reusable 3D Tilt Card component with layered offset backing
 function TiltCard({ src, alt, offsetBorder, glowColor }) {
@@ -43,42 +44,12 @@ function TiltCard({ src, alt, offsetBorder, glowColor }) {
 export default function MobileAppsDetail() {
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    // Set page-specific SEO metadata
-    document.title = "Android & iOS Mobile App Development Experts in Gujarat | Dots & Coms";
-
-    let descMeta = document.querySelector("meta[name='description']");
-    const originalDesc = descMeta ? descMeta.getAttribute("content") : "";
-    if (descMeta) {
-      descMeta.setAttribute(
-        "content",
-        "Mobile app development company in Vadodara offering Android, iOS, and Flutter app development services with responsive design, UI/UX focus, and reliable hosting support."
-      );
-    }
-
-    let keywordsMeta = document.querySelector("meta[name='keywords']");
-    const originalKeywords = keywordsMeta ? keywordsMeta.getAttribute("content") : "";
-    if (keywordsMeta) {
-      keywordsMeta.setAttribute(
-        "content",
-        "android app development Vadodara, ios app development Gujarat, mobile app development company Vadodara, flutter mobile app development, mobile app design services, responsive mobile app development, app developers Gujarat, mobile application development Baroda"
-      );
-    }
-
-    // Set canonical link tag
-    let canonicalLink = document.querySelector("link[rel='canonical']");
-    const originalCanonical = canonicalLink ? canonicalLink.getAttribute("href") : "";
-    if (canonicalLink) {
-      canonicalLink.setAttribute("href", "https://www.dotsandcoms.in/android-ios-mobile-app-development-company-baroda");
-    }
-
-    // Restore site-wide defaults on unmount
-    return () => {
-      document.title = "Website Design & Mobile App Development Company in Vadodara";
-      if (descMeta) descMeta.setAttribute("content", originalDesc);
-      if (keywordsMeta) keywordsMeta.setAttribute("content", originalKeywords);
-      if (canonicalLink) canonicalLink.setAttribute("href", originalCanonical);
-    };
+    return setPageSEO({
+      title: "Android & iOS Mobile App Development Experts in Gujarat | Dots & Coms",
+      description: "Mobile app development company in Vadodara offering Android, iOS, and Flutter app development services with responsive design, UI/UX focus, and reliable hosting support.",
+      keywords: "android app development Vadodara, ios app development Gujarat, mobile app development company Vadodara, flutter mobile app development, mobile app design services, responsive mobile app development, app developers Gujarat, mobile application development Baroda",
+      canonical: "https://www.dotsandcoms.in/android-ios-mobile-app-development-company-baroda"
+    });
   }, []);
 
   return (
@@ -97,14 +68,14 @@ export default function MobileAppsDetail() {
             <section 
               id={sub.id} 
               key={sub.id} 
-              className={`scroll-mt-10 py-28 relative ${
+              className={`scroll-mt-10 py-12 md:py-28 relative ${
                 !isEven ? "bg-slate-50/50 border-y border-slate-100" : "bg-white"
               }`}
             >
               <div className="max-w-7xl mx-auto px-6 lg:px-12">
                 
                 {/* Parent grid aligned to start to enable independent column heights and sticky tracking */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-start">
                   
                   {/* Text Column (Alternating placement) - col-span-7 */}
                   <div className={`lg:col-span-6 flex flex-col space-y-6 text-left relative ${!isEven ? "lg:order-2" : ""}`}>
@@ -148,7 +119,7 @@ export default function MobileAppsDetail() {
                     <div className="w-full max-w-2xl">
                       <TiltCard 
                         src={sub.image} 
-                        alt={sub.title} 
+                        alt={sub.alt || `${sub.title} - iOS and Android Mobile App Development Vadodara | Dots & Coms`} 
                         offsetBorder={sub.offsetBorder}
                         glowColor={sub.glowColor}
                       />

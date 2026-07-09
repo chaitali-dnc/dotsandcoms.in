@@ -1,248 +1,191 @@
-import { useEffect, useRef, useState } from "react";
-import * as THREE from "three";
-
-function isWebGLAvailable() {
-    try {
-        const canvas = document.createElement("canvas");
-        return !!(
-            window.WebGLRenderingContext &&
-            (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
-        );
-    } catch (e) {
-        return false;
-    }
-}
+﻿import { useEffect, useRef } from "react";
 
 export default function ThreeBackground3() {
-    const containerRef = useRef(null);
-    const [isMobile, setIsMobile] = useState(typeof window !== "undefined" ? window.innerWidth < 768 : false);
-    const [webglSupported] = useState(() => isWebGLAvailable());
+    const canvasRef = useRef(null);
 
     useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
-        checkMobile();
-        window.addEventListener("resize", checkMobile);
-        return () => window.removeEventListener("resize", checkMobile);
-    }, []);
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
 
-    useEffect(() => {
-        if (!containerRef.current || !webglSupported) return;
+        const setSize = () => {
+            const p = canvas.parentElement;
+            canvas.width  = p ? p.clientWidth  : window.innerWidth;
+            canvas.height = p ? p.clientHeight : window.innerHeight;
+        };
+        setSize();
 
-        const container = containerRef.current;
-        let width = container.clientWidth || window.innerWidth;
-        let height = container.clientHeight || window.innerHeight;
+        /* ── camera tilt state ── */
+        let targetRotX = -0.28;
+        let targetRotY =  0.0;
+        let rotX       = -0.28;
+        let rotY       =  0.0;
+        const LERP = 0.055;
 
-        const scene = new THREE.Scene();
+        /* ── scroll ripple state ── */
+        // Each scroll event spawns a ripple with an origin and age
+        const ripples = [];
+        let lastScrollY = window.scrollY;
 
-        const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 100);
-        camera.position.z = 12;
-
-        let renderer;
-        try {
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        } catch (err) {
-            console.warn("WebGL not supported, falling back to CSS grid:", err);
-            return;
-        }
-
-        renderer.setSize(width, height);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
-        scene.add(ambientLight);
-
-        const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.5);
-        dirLight1.position.set(5, 8, 5);
-        scene.add(dirLight1);
-
-        const dirLight2 = new THREE.DirectionalLight(0xffaa66, 0.4);
-        dirLight2.position.set(-5, -5, -2);
-        scene.add(dirLight2);
-
-        const gridWidth = 45;
-        const gridHeight = 30;
-        const widthSegments = 90;
-        const heightSegments = 60;
-
-        const geometry = new THREE.PlaneGeometry(gridWidth, gridHeight, widthSegments, heightSegments);
-
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x64748b,
-            wireframe: true,
-            transparent: true,
-            opacity: 0.08,
-            roughness: 0.3,
-            metalness: 0.1,
-        });
-
-        const gridMesh = new THREE.Mesh(geometry, material);
-        gridMesh.rotation.x = -0.4;
-        gridMesh.rotation.y = 0.1;
-        gridMesh.position.set(0, 0, -2);
-        scene.add(gridMesh);
-
-        const GRID_DEPTH = 14;
-        const COVERAGE_MARGIN = 1.6;
-
-        const fitGridToViewport = () => {
-            const aspect = width / height;
-            const vFOV = (camera.fov * Math.PI) / 180;
-            const visibleHeight = 2 * Math.tan(vFOV / 2) * GRID_DEPTH;
-            const visibleWidth = visibleHeight * aspect;
-
-            const scaleX = (visibleWidth * COVERAGE_MARGIN) / gridWidth;
-            const scaleY = (visibleHeight * COVERAGE_MARGIN) / gridHeight;
-
-            const finalScale = Math.max(scaleX, scaleY, 1);
-            gridMesh.scale.set(finalScale, finalScale, 1);
+        /* ── events ── */
+        const onMouseMove = (e) => {
+            const rect = canvas.getBoundingClientRect();
+            const nx = ((e.clientX - rect.left)  / canvas.width  - 0.5) * 2;
+            const ny = ((e.clientY - rect.top)   / canvas.height - 0.5) * 2;
+            targetRotY =  nx * 0.22;
+            targetRotX = -0.28 - ny * 0.14;
         };
 
-        fitGridToViewport();
+        const onScroll = () => {
+            const delta = window.scrollY - lastScrollY;
+            lastScrollY = window.scrollY;
 
-        const targetMouse = new THREE.Vector2(0, 0);
-        const mouse = new THREE.Vector2(0, 0);
-        let scrollY = 0;
+            // Spawn a ripple that travels across the grid
+            // origin is a random point along the horizontal centre
+            ripples.push({
+                // ripple front position (starts at 0 = left edge, travels to 1 = right)
+                t:         0,          // normalised progress 0→1
+                speed:     0.018 + Math.random() * 0.012,
+                amplitude: Math.min(Math.abs(delta) * 2.2, 55),
+                direction: delta > 0 ? 1 : -1,
+            });
 
-        const handleMouseMove = (e) => {
-            const rect = container.getBoundingClientRect();
-            targetMouse.x = ((e.clientX - rect.left) / width) * 2 - 1;
-            targetMouse.y = -((e.clientY - rect.top) / height) * 2 + 1;
+            // Cap stored ripples so it doesn't pile up
+            if (ripples.length > 6) ripples.splice(0, ripples.length - 6);
         };
 
-        const handleMouseLeave = () => {
-            targetMouse.x = 0;
-            targetMouse.y = 0;
+        const onResize = () => setSize();
+
+        window.addEventListener("mousemove", onMouseMove);
+        window.addEventListener("scroll",    onScroll);
+        window.addEventListener("resize",    onResize);
+
+        const CELL = 52;
+        const FL   = 800;
+        const EXTRA = 10;
+
+        /* ── projection ── */
+        const project = (cx, cy, z, W, H) => {
+            const x1 =  cx * Math.cos(rotY) + z  * Math.sin(rotY);
+            const z1 = -cx * Math.sin(rotY) + z  * Math.cos(rotY);
+            const y2 =  cy * Math.cos(rotX) - z1 * Math.sin(rotX);
+            const z2 =  cy * Math.sin(rotX) + z1 * Math.cos(rotX);
+
+            const depth = FL + z2 + 600;
+            const scale = FL / Math.max(depth, 0.1);
+
+            return {
+                sx: W / 2 + x1 * scale,
+                sy: H / 2 + y2 * scale,
+            };
         };
 
-        const handleScroll = () => {
-            scrollY = window.scrollY;
-        };
+        let time = 0;
+        let raf;
 
-        window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseleave", handleMouseLeave);
-        window.addEventListener("scroll", handleScroll);
+        const draw = () => {
+            rotX += (targetRotX - rotX) * LERP;
+            rotY += (targetRotY - rotY) * LERP;
 
-        const handleResize = () => {
-            if (!containerRef.current) return;
-            width = container.clientWidth || window.innerWidth;
-            height = container.clientHeight || window.innerHeight;
-
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-
-            renderer.setSize(width, height);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-            fitGridToViewport();
-        };
-        window.addEventListener("resize", handleResize);
-
-        // Mobile fix: container height can be 0 at the instant this effect runs
-        // (banner height depends on flex content that hasn't finished laying
-        // out yet). A ResizeObserver catches the real size as soon as it's
-        // available and re-fits the camera + grid, instead of relying on a
-        // single mount-time measurement.
-        const resizeObserver = new ResizeObserver(() => {
-            handleResize();
-            if (isMobile) {
-                renderer.render(scene, camera);
+            // Advance ripple fronts
+            for (let i = ripples.length - 1; i >= 0; i--) {
+                ripples[i].t += ripples[i].speed;
+                if (ripples[i].t > 1.6) ripples.splice(i, 1); // done
             }
-        });
-        resizeObserver.observe(container);
 
-        let animationFrameId;
-        const clock = new THREE.Clock();
+            const W = canvas.width;
+            const H = canvas.height;
 
-        const animate = () => {
-            const time = clock.getElapsedTime();
-            const scrollOffset = scrollY * 0.002;
+            ctx.clearRect(0, 0, W, H);
+            ctx.strokeStyle = "rgba(148, 163, 184, 0.22)";
+            ctx.lineWidth   = 1;
 
-            mouse.x += (targetMouse.x - mouse.x) * 0.05;
-            mouse.y += (targetMouse.y - mouse.y) * 0.05;
+            const COLS = Math.ceil(W / CELL) + EXTRA * 2;
+            const ROWS = Math.ceil(H / CELL) + EXTRA * 2;
 
-            const aspect = width / height;
-            const vFOV = (camera.fov * Math.PI) / 180;
-            const visibleHeight = 2 * Math.tan(vFOV / 2) * GRID_DEPTH;
-            const visibleWidth = visibleHeight * aspect;
-            const mouseX3D = mouse.x * (visibleWidth / 2);
-            const mouseY3D = mouse.y * (visibleHeight / 2);
+            const pts = [];
+            for (let r = 0; r <= ROWS; r++) {
+                pts[r] = [];
+                for (let c = 0; c <= COLS; c++) {
+                    const cx = (c - COLS / 2) * CELL;
+                    const cy = (r - ROWS / 2) * CELL;
 
-            gridMesh.rotation.x = -0.4 - mouse.y * 0.18 - scrollOffset * 0.1;
-            gridMesh.rotation.y = 0.1 + mouse.x * 0.18;
+                    // Ambient background wave
+                    const ambient =
+                        Math.sin(c * 0.38 + time) *
+                        Math.cos(r * 0.42 + time * 0.7) * 16 +
+                        Math.sin(r * 0.3  - time * 0.5) * 8;
 
-            gridMesh.position.x = mouse.x * 2.2;
-            gridMesh.position.y = mouse.y * 1.5;
+                    // Scroll ripples — each one is a travelling sine pulse
+                    let scrollZ = 0;
+                    for (const rip of ripples) {
+                        // Normalise column position 0→1 across the grid
+                        const colNorm = c / COLS;
+                        const rowNorm = r / ROWS;
 
-            const positionAttribute = geometry.attributes.position;
-            const scale = gridMesh.scale.x;
+                        // Ripple front travels across cols (t goes 0→1)
+                        // The pulse is a sin envelope around the front position
+                        const distFromFront = colNorm - rip.t * 1.1;
+                        const envelope = Math.exp(-distFromFront * distFromFront * 28);
 
-            for (let i = 0; i < positionAttribute.count; i++) {
-                const x = positionAttribute.getX(i);
-                const y = positionAttribute.getY(i);
+                        // Row modulation so ripple is diagonal/interesting
+                        const rowMod = Math.sin(rowNorm * Math.PI * 2.5 + rip.t * 6) * 0.5;
 
-                const worldX = x * scale + gridMesh.position.x;
-                const worldY = y * scale + gridMesh.position.y;
-                const dx = worldX - mouseX3D;
-                const dy = worldY - mouseY3D;
-                const dist = Math.sqrt(dx * dx + dy * dy);
+                        scrollZ += envelope * rip.amplitude * (1 + rowMod) * rip.direction;
+                    }
 
-                const rippleRadius = 7.5 * scale;
-                let mouseSwell = 0;
-                if (dist < rippleRadius) {
-                    const force = (rippleRadius - dist) / rippleRadius;
-                    mouseSwell = Math.sin(force * Math.PI) * 0.9;
+                    const z = ambient + scrollZ;
+                    pts[r][c] = project(cx, cy, z, W, H);
                 }
-
-                const waveTime = isMobile ? 0 : time;
-                const z = Math.sin(x * 0.15 + waveTime * 0.35)
-                    * Math.cos(y * 0.18 + waveTime * 0.25) * 0.7
-                    + Math.sin(y * 0.12 - waveTime * 0.18) * 0.3
-                    + mouseSwell;
-
-                positionAttribute.setZ(i, z);
             }
-            positionAttribute.needsUpdate = true;
 
-            renderer.render(scene, camera);
+            /* Horizontal lines */
+            for (let r = 0; r <= ROWS; r++) {
+                ctx.beginPath();
+                for (let c = 0; c <= COLS; c++) {
+                    const p = pts[r][c];
+                    c === 0 ? ctx.moveTo(p.sx, p.sy) : ctx.lineTo(p.sx, p.sy);
+                }
+                ctx.stroke();
+            }
 
-            if (isMobile) return;
-            animationFrameId = requestAnimationFrame(animate);
+            /* Vertical lines */
+            for (let c = 0; c <= COLS; c++) {
+                ctx.beginPath();
+                for (let r = 0; r <= ROWS; r++) {
+                    const p = pts[r][c];
+                    r === 0 ? ctx.moveTo(p.sx, p.sy) : ctx.lineTo(p.sx, p.sy);
+                }
+                ctx.stroke();
+            }
+
+            time += 0.014;
+            raf = requestAnimationFrame(draw);
         };
 
-        animate();
+        draw();
 
         return () => {
-            cancelAnimationFrame(animationFrameId);
-            resizeObserver.disconnect();
-            window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseleave", handleMouseLeave);
-            window.removeEventListener("scroll", handleScroll);
-            window.removeEventListener("resize", handleResize);
-
-            if (container.contains(renderer.domElement)) {
-                container.removeChild(renderer.domElement);
-            }
-
-            geometry.dispose();
-            material.dispose();
-            renderer.dispose();
+            cancelAnimationFrame(raf);
+            window.removeEventListener("mousemove", onMouseMove);
+            window.removeEventListener("scroll",    onScroll);
+            window.removeEventListener("resize",    onResize);
         };
-    }, [isMobile, webglSupported]);
-
-    if (!webglSupported) {
-        return (
-            <div 
-                className="absolute inset-0 w-full h-full z-0 pointer-events-none opacity-[0.06] bg-[linear-gradient(to_right,#64748b_1px,transparent_1px),linear-gradient(to_bottom,#64748b_1px,transparent_1px)] bg-[size:4rem_4rem]"
-                aria-hidden="true"
-            />
-        );
-    }
+    }, []);
 
     return (
-        <div
-            ref={containerRef}
-            className="absolute inset-0 w-full h-full z-0 pointer-events-none"
+        <canvas
+            ref={canvasRef}
+            style={{
+                position: "absolute",
+                inset: 0,
+                width: "100%",
+                height: "100%",
+                display: "block",
+                zIndex: 0,
+                pointerEvents: "none",
+            }}
             aria-hidden="true"
         />
     );

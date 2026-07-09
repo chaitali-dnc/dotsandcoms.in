@@ -11,33 +11,58 @@
  */
 export function setPageSEO({ title, description, keywords, canonical, ogImage }) {
   const DEFAULT_TITLE = "Website Design & Mobile App Development Company in Vadodara";
-  const DEFAULT_URL = "https://www.dotsandcoms.in/";
   const DEFAULT_IMAGE = "https://www.dotsandcoms.in/og-image.png";
 
   const imgUrl = ogImage || DEFAULT_IMAGE;
 
   // ── helpers ──────────────────────────────────────────────────────────────
   const setMeta = (selector, attr, value) => {
-    const el = document.querySelector(selector);
-    const original = el ? el.getAttribute(attr) : "";
-    if (el) el.setAttribute(attr, value);
-    return { el, attr, original };
+    let el = document.querySelector(selector);
+    let created = false;
+
+    if (!el) {
+      if (selector.startsWith("meta[")) {
+        el = document.createElement("meta");
+        const match = selector.match(/meta\[(name|property)=['"]([^'"]+)['"]\]/);
+        if (match) {
+          el.setAttribute(match[1], match[2]);
+        }
+        document.head.appendChild(el);
+        created = true;
+      } else if (selector.startsWith("link[")) {
+        el = document.createElement("link");
+        const match = selector.match(/link\[(rel)=['"]([^'"]+)['"]\]/);
+        if (match) {
+          el.setAttribute(match[1], match[2]);
+        }
+        document.head.appendChild(el);
+        created = true;
+      }
+    }
+
+    const original = el && !created ? el.getAttribute(attr) : "";
+    if (el) el.setAttribute(attr, value || "");
+    return { el, attr, original, created };
   };
 
   // ── apply ─────────────────────────────────────────────────────────────────
   const origTitle = document.title;
-  document.title = title;
+  if (title) document.title = title;
 
   const slots = [
     setMeta("meta[name='description']",            "content", description),
     setMeta("meta[name='keywords']",               "content", keywords),
     setMeta("link[rel='canonical']",               "href",    canonical),
     // OG
+    setMeta("meta[property='og:type']",            "content", "website"),
     setMeta("meta[property='og:title']",           "content", title),
     setMeta("meta[property='og:description']",     "content", description),
     setMeta("meta[property='og:url']",             "content", canonical),
     setMeta("meta[property='og:image']",           "content", imgUrl),
     // Twitter
+    setMeta("meta[name='twitter:card']",           "content", "summary_large_image"),
+    setMeta("meta[name='twitter:site']",           "content", "@dotsandcoms"),
+    setMeta("meta[name='twitter:creator']",        "content", "@dotsandcoms"),
     setMeta("meta[name='twitter:title']",          "content", title),
     setMeta("meta[name='twitter:description']",    "content", description),
     setMeta("meta[name='twitter:url']",            "content", canonical),
@@ -47,8 +72,14 @@ export function setPageSEO({ title, description, keywords, canonical, ogImage })
   // ── cleanup ───────────────────────────────────────────────────────────────
   return () => {
     document.title = origTitle || DEFAULT_TITLE;
-    slots.forEach(({ el, attr, original }) => {
-      if (el) el.setAttribute(attr, original);
+    slots.forEach(({ el, attr, original, created }) => {
+      if (el) {
+        if (created) {
+          el.remove();
+        } else {
+          el.setAttribute(attr, original);
+        }
+      }
     });
   };
 }

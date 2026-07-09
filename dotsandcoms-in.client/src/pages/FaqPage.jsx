@@ -10,7 +10,7 @@ function FaqPage() {
       title: "FAQs – Web Design, Mobile App & Hosting Questions | Dots & Coms",
       description: "Find answers to frequently asked questions about website design, mobile app development, web hosting, SEO services, and digital marketing at Dots & Coms, Baroda.",
       keywords: "web design FAQ Vadodara, mobile app development questions, web hosting FAQ Baroda, SEO services FAQ, digital marketing questions, website development Baroda FAQ, Dots and Coms FAQ",
-      canonical: "https://www.dotsandcoms.in/frequently-asked-questions",
+      canonical: "https://www.dotsandcoms.in/faqs-web-design-hosting-digital-marketing",
     });
   }, []);
 

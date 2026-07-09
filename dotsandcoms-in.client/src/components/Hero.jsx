@@ -18,6 +18,16 @@ export default function Hero() {
     const sectionRef = useRef(null);
     const dashRef = useRef(null);
 
+    // Detect mobile — disable all scroll-driven transforms on mobile
+    const [isMobile, setIsMobile] = useState(() =>
+        typeof window !== "undefined" ? window.innerWidth < 768 : false
+    );
+    useEffect(() => {
+        const check = () => setIsMobile(window.innerWidth < 768);
+        window.addEventListener("resize", check);
+        return () => window.removeEventListener("resize", check);
+    }, []);
+
     // Mouse position values for parallax floating dashboard
     const x = useMotionValue(0);
     const y = useMotionValue(0);
@@ -62,11 +72,18 @@ export default function Hero() {
         offset: ["start start", "end start"],
     });
 
-    const scrollOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-    const scrollTextY = useTransform(scrollYProgress, [0, 1], [0, -80]);
-    const scrollMockupY = useTransform(scrollYProgress, [0, 1], [0, 60]);
-    const scrollMockupScale = useTransform(scrollYProgress, [0, 1], [1, 0.94]);
-    const scrollBgScale = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+    const _scrollOpacity    = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+    const _scrollTextY      = useTransform(scrollYProgress, [0, 1], [0, -80]);
+    const _scrollMockupY    = useTransform(scrollYProgress, [0, 1], [0, 60]);
+    const _scrollMockupScale= useTransform(scrollYProgress, [0, 1], [1, 0.94]);
+    const _scrollBgScale    = useTransform(scrollYProgress, [0, 1], [1, 1.25]);
+
+    // On mobile disable all scroll-driven motion — prevents blur/zoom effect
+    const scrollOpacity     = isMobile ? 1           : _scrollOpacity;
+    const scrollTextY       = isMobile ? 0           : _scrollTextY;
+    const scrollMockupY     = isMobile ? 0           : _scrollMockupY;
+    const scrollMockupScale = isMobile ? 1           : _scrollMockupScale;
+    const scrollBgScale     = isMobile ? 1           : _scrollBgScale;
 
     // Headline stagger variants
     const titleContainerVariants = {

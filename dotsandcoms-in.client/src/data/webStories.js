@@ -1,3 +1,10 @@
+import seoStrategyImg        from "../assets/images/SEO-strategy-Vadodara-content-marketing.png";
+import webDesignImg           from "../assets/images/web-design-principles-Baroda-user-experience.png";
+import websiteOptimImg        from "../assets/images/website-optimization-Vadodara-performance-growth.png";
+import mobileAppImg           from "../assets/images/mobile-app-solutions-Baroda-business-growth.png";
+import hostingImg             from "../assets/images/hosting-services-Vadodara-secure-servers.png";
+import websiteAuditImg        from "../assets/images/website-audit-Baroda-technical-analysis.png";
+
 export const bannerData = {
   title: "Web Stories",
   subtitle: "Explore quick, visual guides on search optimization, web technologies, hosting infrastructure, and mobile architecture.",
@@ -17,7 +24,7 @@ export const webStories = [
   {
     id: 1,
     title: "Raising Digital Presence through Expert SEO Solutions",
-    image: "https://www.dotsandcoms.in/assets/images/SEO-strategy-Vadodara-content-marketing.png",
+    image: seoStrategyImg,
     url: "https://webstories.dotsandcoms.in/?web-story=seo-experts-social-media-marketing-company-vadodara",
     category: "SEO",
     accentColor: "#dc2626", // Red
@@ -26,7 +33,7 @@ export const webStories = [
   {
     id: 2,
     title: "Core principles of web design and their impact on user experience",
-    image: "https://www.dotsandcoms.in/assets/images/web-design-principles-Baroda-user-experience.png",
+    image: webDesignImg,
     url: "https://webstories.dotsandcoms.in/?post_type=web-story&p=72",
     category: "Web Design",
       accentColor: "#dc2626", // Orange
@@ -35,7 +42,7 @@ export const webStories = [
   {
     id: 3,
     title: "Maximise Your Website’s Potential with DotsandComs",
-    image: "https://www.dotsandcoms.in/assets/images/website-optimization-Vadodara-performance-growth.png",
+    image: websiteOptimImg,
     url: "https://webstories.dotsandcoms.in/?post_type=web-story&p=110",
     category: "Optimization",
       accentColor: "#dc2626", // Green
@@ -44,7 +51,7 @@ export const webStories = [
   {
     id: 4,
     title: "Core Principles of Mobile App Development and Their Impact on User Experience",
-    image: "https://www.dotsandcoms.in/assets/images/mobile-app-solutions-Baroda-business-growth.png",
+    image: mobileAppImg,
     url: "https://webstories.dotsandcoms.in/?post_type=web-story&p=146",
     category: "Mobile Apps",
       accentColor: "#dc2626", // Blue
@@ -53,7 +60,7 @@ export const webStories = [
   {
     id: 5,
     title: "Discovering Dedicated Web Hosting and Expert Support",
-    image: "https://www.dotsandcoms.in/assets/images/hosting-services-Vadodara-secure-servers.png",
+    image: hostingImg,
     url: "https://webstories.dotsandcoms.in/?post_type=web-story&p=329",
     category: "Web Hosting",
       accentColor: "#dc2626", // Purple
@@ -62,7 +69,7 @@ export const webStories = [
   {
     id: 6,
     title: "Turns Missed Opportunities into Leads with a Free Website Audit",
-    image: "https://www.dotsandcoms.in/assets/images/website-audit-Baroda-technical-analysis.png",
+    image: websiteAuditImg,
     url: "https://webstories.dotsandcoms.in/?post_type=web-story&p=6",
     category: "Marketing",
       accentColor: "#dc2626", // Pink

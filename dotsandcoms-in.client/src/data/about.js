@@ -11,6 +11,14 @@ import creativeSolutionsImg from "../assets/images/web-design-agency-Baroda-crea
 import expertDevelopersImg from "../assets/images/IT-team-Vadodara-expert-developers.png";
 import teamBrunchImg from "../assets/images/team-brunch-at-hyatt.png";
 
+// Local image assets for events section
+import corporateEventsImg from "../assets/images/corporate-events-Baroda-company-culture.png";
+import teamBuildingImg from "../assets/images/team-building-Vadodara-office-activities.png";
+import workplaceEnvironmentImg from "../assets/images/workplace-environment-Baroda-tech-company.png";
+import businessMeetingImg from "../assets/images/business-meeting-Vadodara-it-services.png";
+import companyCelebrationImg from "../assets/images/company-celebration-Baroda-digital-agency.png";
+import officeLifeImg from "../assets/images/office-life-Vadodara-development-team.png";
+
 export const aboutHeroData = {
   badge: "// Our Heritage",
   title: "Crafting Digital Excellence Since 1999",
@@ -143,26 +151,26 @@ export const eventsIntro = {
 export const events = [
   {
     title: "Annual Excellence Awards 2025",
-    image: "/src/assets/images/corporate-events-Baroda-company-culture.png",
+    image: corporateEventsImg,
   },
   {
     title: "Hong Kong Electronics Fair",
-    image: "/src/assets/images/team-building-Vadodara-office-activities.png",
+    image: teamBuildingImg,
   },
   {
     title: "CeBIT Australia Exhibition",
-    image: "/src/assets/images/workplace-environment-Baroda-tech-company.png",
+    image: workplaceEnvironmentImg,
   },
   {
     title: "India Trade Fair 2013, Dubai",
-    image: "/src/assets/images/business-meeting-Vadodara-it-services.png",
+    image: businessMeetingImg,
   },
   {
     title: "Mobile Monday Ahmedabad",
-    image: "/src/assets/images/company-celebration-Baroda-digital-agency.png",
+    image: companyCelebrationImg,
   },
   {
     title: "Hong Kong Tech Expo",
-    image: "/src/assets/images/office-life-Vadodara-development-team.png",
+    image: officeLifeImg,
   },
 ];

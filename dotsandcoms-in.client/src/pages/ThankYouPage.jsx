@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CheckCircle2, AlertTriangle, ArrowRight } from "lucide-react";
 import InnerBanner from "../components/ui/InnerBanner";
+import { setPageSEO } from "../utils/seo";
 
 export default function ThankYouPage() {
   const location = useLocation();
@@ -10,7 +11,12 @@ export default function ThankYouPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = "Thank You for Your Order | Dots & Coms";
+    return setPageSEO({
+      title: "Thank You for Your Order | Dots & Coms",
+      description: "Thank you for choosing Dots & Coms. Your order has been placed successfully. Our team will contact you soon.",
+      keywords: "thank you page, order success, checkout complete, Dots and Coms",
+      canonical: "https://www.dotsandcoms.in/thank-you"
+    });
   }, []);
 
   if (!state) {

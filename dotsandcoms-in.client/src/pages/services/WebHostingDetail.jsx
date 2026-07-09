@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Database, Download, Check, Globe, Server, Cpu, ShieldCheck, Monitor, Terminal, Settings } from "lucide-react";
 import InnerBanner from "../../components/ui/InnerBanner";
+import { setPageSEO } from "../../utils/seo";
 import { 
   bannerData, 
   websiteHostingData, 
@@ -46,40 +47,12 @@ export default function WebHostingDetail() {
 
   // Set page-specific SEO metadata on mount
   useEffect(() => {
-    document.title = "Cloud Hosting Services & Windows Web Hosting Company in Baroda | Dots & Coms";
-
-    let descMeta = document.querySelector("meta[name='description']");
-    const originalDesc = descMeta ? descMeta.getAttribute("content") : "";
-    if (descMeta) {
-      descMeta.setAttribute(
-        "content",
-        "Cloud hosting services in Baroda offering Windows and Linux hosting, VPS hosting, dedicated servers, reseller hosting, and scalable infrastructure with reliable uptime."
-      );
-    }
-
-    let keywordsMeta = document.querySelector("meta[name='keywords']");
-    const originalKeywords = keywordsMeta ? keywordsMeta.getAttribute("content") : "";
-    if (keywordsMeta) {
-      keywordsMeta.setAttribute(
-        "content",
-        "cloud hosting services Baroda, windows web hosting Baroda, Linux hosting Vadodara, VPS hosting Baroda, dedicated server provider Vadodara, reseller hosting services, server hosting Baroda, web hosting company Vadodara"
-      );
-    }
-
-    // Set canonical link tag
-    let canonicalLink = document.querySelector("link[rel='canonical']");
-    const originalCanonical = canonicalLink ? canonicalLink.getAttribute("href") : "";
-    if (canonicalLink) {
-      canonicalLink.setAttribute("href", "https://www.dotsandcoms.in/windows-web-hosting-service-provider-baroda");
-    }
-
-    // Restore site-wide defaults on unmount
-    return () => {
-      document.title = "Website Design & Mobile App Development Company in Vadodara";
-      if (descMeta) descMeta.setAttribute("content", originalDesc);
-      if (keywordsMeta) keywordsMeta.setAttribute("content", originalKeywords);
-      if (canonicalLink) canonicalLink.setAttribute("href", originalCanonical);
-    };
+    return setPageSEO({
+      title: "Cloud Hosting Services & Windows Web Hosting Company in Baroda | Dots & Coms",
+      description: "Cloud hosting services in Baroda offering Windows and Linux hosting, VPS hosting, dedicated servers, reseller hosting, and scalable infrastructure with reliable uptime.",
+      keywords: "cloud hosting services Baroda, windows web hosting Baroda, Linux hosting Vadodara, VPS hosting Baroda, dedicated server provider Vadodara, reseller hosting services, server hosting Baroda, web hosting company Vadodara",
+      canonical: "https://www.dotsandcoms.in/windows-web-hosting-service-provider-baroda"
+    });
   }, []);
 
   return (
@@ -626,7 +599,7 @@ export default function WebHostingDetail() {
                                 ))}
                               </ul>
                               <div className="w-20 h-20 bg-slate-50 border border-slate-200 rounded-xl p-2 flex items-center justify-center flex-shrink-0 self-center">
-                                <img src={dedicatedServersData.logo} alt="Logo" className="max-w-full max-h-full object-contain" />
+                                <img src={dedicatedServersData.logo} alt="Dots & Coms Dedicated Web Servers Infrastructure logo" className="max-w-full max-h-full object-contain" />
                               </div>
                             </div>
                           </div>
@@ -684,7 +657,7 @@ export default function WebHostingDetail() {
                       <div className="relative w-full max-w-sm p-4 bg-white flex justify-center">
                         <img 
                           src={sslData.image} 
-                          alt="SSL Secure Transaction Seal" 
+                          alt="SSL Certificate Security Protection Seal - Dots & Coms Web Hosting Vadodara" 
                           className="w-full max-w-[280px] h-auto object-contain select-none block"
                           loading="lazy"
                         />

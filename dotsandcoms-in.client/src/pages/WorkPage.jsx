@@ -4,6 +4,7 @@ import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from
 import { ArrowUpRight, Globe, Smartphone, ShoppingBag, Sparkles, ExternalLink, Monitor, Layers } from "lucide-react";
 import InnerBanner from "../components/ui/InnerBanner";
 import { projects } from "../data/projects";
+import { setPageSEO } from "../utils/seo";
 
 const categories = [
   { id: "All", label: "All Work", icon: Layers },
@@ -207,7 +208,7 @@ function ProjectCard({ project, idx, activeTab }) {
               <source srcSet={project.png} type="image/png" />
               <img
                 src={project.png}
-                alt={project.title}
+                alt={project.alt || `${project.title} - ${project.category} Portfolio | Dots & Coms Web Design Company Vadodara`}
                 className={`transition-transform duration-700 ease-out group-hover:scale-102 ${
                   isMobileApp
                     ? "max-w-full max-h-full object-contain"
@@ -324,40 +325,12 @@ export default function WorkPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    // Set page-specific SEO metadata
-    document.title = "Portfolio – Web Designing & Mobile App Development Services | Dots & Coms";
-
-    let descMeta = document.querySelector("meta[name='description']");
-    const originalDesc = descMeta ? descMeta.getAttribute("content") : "";
-    if (descMeta) {
-      descMeta.setAttribute(
-        "content",
-        "Portfolio showcasing responsive website design, web application development, eCommerce websites, mobile app development, domain registration, and SEO project work."
-      );
-    }
-
-    let keywordsMeta = document.querySelector("meta[name='keywords']");
-    const originalKeywords = keywordsMeta ? keywordsMeta.getAttribute("content") : "";
-    if (keywordsMeta) {
-      keywordsMeta.setAttribute(
-        "content",
-        "web design portfolio Vadodara, responsive website design and development, web application development, ecommerce website development, mobile app development portfolio, iPad mobile application development, website design projects"
-      );
-    }
-
-    let canonicalLink = document.querySelector("link[rel='canonical']");
-    const originalCanonical = canonicalLink ? canonicalLink.getAttribute("href") : "";
-    if (canonicalLink) {
-      canonicalLink.setAttribute("href", "https://www.dotsandcoms.in/website-mobile-app-development-company-portfolio-baroda");
-    }
-
-    return () => {
-      document.title = "Website Design & Mobile App Development Company in Vadodara";
-      if (descMeta) descMeta.setAttribute("content", originalDesc);
-      if (keywordsMeta) keywordsMeta.setAttribute("content", originalKeywords);
-      if (canonicalLink) canonicalLink.setAttribute("href", originalCanonical);
-    };
+    return setPageSEO({
+      title: "Portfolio – Web Designing & Mobile App Development Services | Dots & Coms",
+      description: "Portfolio showcasing responsive website design, web application development, eCommerce websites, mobile app development, domain registration, and SEO project work.",
+      keywords: "web design portfolio Vadodara, responsive website design and development, web application development, ecommerce website development, mobile app development portfolio, iPad mobile application development, website design projects",
+      canonical: "https://www.dotsandcoms.in/website-mobile-app-development-company-portfolio-baroda"
+    });
   }, []);
 
   const filteredProjects = projects.filter((project) => {

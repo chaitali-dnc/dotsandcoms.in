@@ -326,7 +326,7 @@ export default function OneLifeCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgAudience} alt="Understanding the Audience" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgAudience} alt="User Persona Research and Target Audience mapping for Mental Health Organization" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -372,7 +372,7 @@ export default function OneLifeCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgWebDesign} alt="Website Transformation" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgWebDesign} alt="Non-Profit Custom Web Redesign and Accessible User Interface by Dots & Coms" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -430,7 +430,7 @@ export default function OneLifeCaseStudyPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="w-full md:w-5/12 rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative shrink-0">
-                <img src={imgSeo} alt="SEO Strategy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                <img src={imgSeo} alt="National Organic SEO Campaign and Content Strategy for Counseling NGO" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
               <div className="space-y-4 text-left">

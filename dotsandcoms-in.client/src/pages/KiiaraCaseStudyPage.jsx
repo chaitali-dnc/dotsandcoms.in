@@ -366,7 +366,7 @@ export default function KiiaraCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgWebDesign} alt="Website Design" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgWebDesign} alt="Custom Premium E-Commerce Website Design for Kiiara Kreations Handmade Products in Vadodara" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -433,7 +433,7 @@ export default function KiiaraCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgSeo} alt="Expanding Beyond Friends & Family" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgSeo} alt="E-Commerce Brand Organic SEO Growth and Client Acquisition Expansion Strategy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -488,7 +488,7 @@ export default function KiiaraCaseStudyPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="w-full md:w-5/12 rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative shrink-0">
-                <img src={imgLeadGen} alt="National and International Reach" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                <img src={imgLeadGen} alt="Global E-Commerce Logistics and International Customer Reach Expansion for Indian Brand" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
               <div className="space-y-4 text-left">

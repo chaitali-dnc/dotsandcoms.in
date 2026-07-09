@@ -32,7 +32,7 @@ const servicesHub = [
     bgGlow: "bg-cyan-500/5"
   },
   {
-    path: "/digital-marketing-company-vadodara",
+    path: "/organic-seo-ppc-digital-marketing-vadodara",
     title: "Digital Marketing & SEO",
     desc: "Keyword research optimization, organic SEO audits, paid search Google AdWords setup, and multi-channel marketing campaigns.",
     icon: Target,

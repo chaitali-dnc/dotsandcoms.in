@@ -29,7 +29,7 @@ export default function Footer() {
 
       {/* Watermark logo in the background */}
       <div className="absolute right-[6%] bottom-[8%] w-[260px] md:w-[330px] opacity-[0.045] pointer-events-none select-none -z-10 transform -rotate-6 filter brightness-0 invert">
-        <img src={logoImg} alt="" className="w-full h-auto object-contain" />
+        <img src={logoImg} alt="Dots & Coms Logo - Professional Website Design and Mobile App Development Company in Vadodara" className="w-full h-auto object-contain" />
       </div>
 
       {/* Glowing gradient mesh accents */}
@@ -90,7 +90,7 @@ export default function Footer() {
                 <Link to="/website-mobile-app-development-company-portfolio-baroda" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Our Work</Link>
               </li>
               <li>
-                <Link to="/frequently-asked-questions" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">FAQs</Link>
+                <Link to="/faqs-web-design-hosting-digital-marketing" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">FAQs</Link>
               </li>
               <li>
                 <Link to="/webhosting-vps-dedicated-server-support-baroda" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Technical Support</Link>
@@ -168,13 +168,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-[14px] pl-2.5 border-l border-slate-800 mb-2.5">
               <li>
-                <Link to="/digital-marketing-company-vadodara#organic-seo" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Organic SEO</Link>
+                <Link to="/organic-seo-ppc-digital-marketing-vadodara#organic-seo" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Organic SEO</Link>
               </li>
               <li>
-                <Link to="/digital-marketing-company-vadodara#social-media" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Social Media Marketing</Link>
+                <Link to="/organic-seo-ppc-digital-marketing-vadodara#social-media" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Social Media Marketing</Link>
               </li>
               <li>
-                <Link to="/digital-marketing-company-vadodara#google-adwords" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Google AdWords</Link>
+                <Link to="/organic-seo-ppc-digital-marketing-vadodara#google-adwords" className="text-slate-400 hover:text-white transition-colors duration-300 font-normal">Google AdWords</Link>
               </li>
             </ul>
           </div>

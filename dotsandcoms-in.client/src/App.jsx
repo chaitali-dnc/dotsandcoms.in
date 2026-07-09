@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Home from "./components/Home";
 import Home2 from "./components/Home2";
@@ -91,10 +91,12 @@ function App() {
                   <Route path="/responsive-website-designing-company-vadodara" element={<WebDesignDetail />} />
                   <Route path="/android-ios-mobile-app-development-company-baroda" element={<MobileAppsDetail />} />
                   <Route path="/windows-web-hosting-service-provider-baroda" element={<WebHostingDetail />} />
-                  <Route path="/digital-marketing-company-vadodara" element={<DigitalMarketingDetail />} />
+                  <Route path="/windows-and-linux-vps-server-hosting-gujarat" element={<Navigate to="/windows-web-hosting-service-provider-baroda" replace />} />
+                  <Route path="/dedicated-server-hosting-cloud-hosting-vadodara" element={<Navigate to="/windows-web-hosting-service-provider-baroda" replace />} />
+                  <Route path="/organic-seo-ppc-digital-marketing-vadodara" element={<DigitalMarketingDetail />} />
                   <Route path="/contact-webdesign-mobileapp-socialmedia-marketing-baroda" element={<ContactPage />} />
                   <Route path="/webhosting-vps-dedicated-server-support-baroda" element={<TechnicalSupportPage />} />
-                  <Route path="/frequently-asked-questions" element={<FaqPage />} />
+                  <Route path="/faqs-web-design-hosting-digital-marketing" element={<FaqPage />} />
                   <Route path="/web-stories" element={<WebStoriesPage />} />
                   <Route path="/terms-and-conditions" element={<TermsPage />} />
                   <Route path="/sitemap" element={<SitemapPage />} />

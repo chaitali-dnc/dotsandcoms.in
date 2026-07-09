@@ -8,6 +8,7 @@ import {
   HelpCircle, RefreshCw, ChevronRight, CheckCircle2, Server, Settings, Terminal
 } from "lucide-react";
 import InnerBanner from "../components/ui/InnerBanner";
+import { setPageSEO } from "../utils/seo";
 
 // Predefined packages database with detailed specifications
 const packages = [
@@ -323,21 +324,12 @@ export default function OrderNowPage() {
   // SEO metadata setup
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.title = `Complete Your Order - ${selectedPack.name} | Dots & Coms`;
-    
-    let descMeta = document.querySelector("meta[name='description']");
-    const originalDesc = descMeta ? descMeta.getAttribute("content") : "";
-    if (descMeta) {
-      descMeta.setAttribute(
-        "content",
-        `Securely order ${selectedPack.name}. Blazing fast SSD network performance and professional support with Dots & Coms Baroda.`
-      );
-    }
-
-    return () => {
-      document.title = "Website Design & Mobile App Development Company in Vadodara";
-      if (descMeta) descMeta.setAttribute("content", originalDesc);
-    };
+    return setPageSEO({
+      title: `Complete Your Order - ${selectedPack.name} | Dots & Coms`,
+      description: `Securely order ${selectedPack.name}. Blazing fast SSD network performance and professional support with Dots & Coms Baroda.`,
+      keywords: "web hosting order, buy ssl certificate, checkout page Dots and Coms, windows hosting Baroda, secure server purchase",
+      canonical: "https://www.dotsandcoms.in/order-now"
+    });
   }, [selectedPack]);
 
   const handlePackageChange = (e) => {

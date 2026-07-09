@@ -1,7 +1,19 @@
+import { useEffect } from "react";
 import InnerBanner from "../components/ui/InnerBanner";
 import SitemapGrid from "../components/SitemapGrid";
+import { setPageSEO } from "../utils/seo";
 
 export default function NotFoundPage() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    return setPageSEO({
+      title: "404 - Page Not Found | Dots & Coms",
+      description: "The page you are looking for does not exist. Navigate using our sitemap below to find what you are looking for.",
+      keywords: "404 error, page not found, error page, Dots and Coms",
+      canonical: "https://www.dotsandcoms.in/404"
+    });
+  }, []);
+
   return (
     <>
       <InnerBanner

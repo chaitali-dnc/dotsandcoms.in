@@ -16,7 +16,7 @@ export default function Logo({ size = "md" }) {
     <div className="flex items-center select-none">
       <img
         src={logoImg}
-        alt="Dots and Coms  Logo"
+        alt="Dots & Coms - Web Development and Android iOS Mobile App Design Agency in Vadodara"
         className={`${logoHeight} w-auto object-contain transition-all duration-300`}
         draggable="false"
       />

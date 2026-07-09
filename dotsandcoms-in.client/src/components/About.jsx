@@ -129,7 +129,7 @@ export default function About() {
                       <div className="relative w-full h-full group">
                         <img
                           src={slide.image}
-                          alt={slide.title}
+                          alt={slide.alt || `${slide.title} - Custom Web Design & Web Development Company in Vadodara`}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
                         />
