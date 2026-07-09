@@ -427,12 +427,16 @@ export default function OrderNowPage() {
             contactNumber: contactNo,
             emailId: email,
             address,
+            city,                                    // 👈 add
             state,
             country,
             comments,
             isServerPlan,
-            totalPrice,
-            // Agar server plan hai toh actual state bhejo, nahi toh khali string ya default value bhejo backend ke validation ko satisfy karne ke liye
+            totalPrice: Math.round(totalPrice * 100) / 100,
+            setupCharge,                              // 👈 add
+            dbAddonPrice,                             // 👈 add
+            discount: Math.round(discount * 100) / 100, // 👈 add
+
             serverName: isServerPlan ? serverName : "N/A",
             contactPersonName: isServerPlan ? contactPersonName : "N/A",
             specialInstructions: isServerPlan ? specialInstructions : "None",
@@ -440,7 +444,6 @@ export default function OrderNowPage() {
             paymentTerms: isServerPlan ? (paymentTerm === "1" ? "1 Month + Setup" : paymentTerm === "6" ? "6 Months" : "12 Months (5% Disc)") : "N/A",
             controlPanel: isServerPlan ? (controlPanelOption === "0" ? "No Panel" : `Panel Option - Rate: ₹${controlPanelOption}/mo`) : "N/A",
 
-            // Shared plan fields
             domainName: !isServerPlan ? domain : "N/A",
             yourName: !isServerPlan ? yourName : "N/A",
             areaCode: !isServerPlan ? areaCode : "N/A",
@@ -455,16 +458,11 @@ export default function OrderNowPage() {
                 body: JSON.stringify(payload)
             });
 
-            //const API_URL = "https://localhost:7248/api/orders";
-
-            //const response = await axios.post(API_URL, payload);
-
             const data = await response.json();
 
             if (response.ok && data.success) {
-                setOrderNumber(`DNC-${data.orderId}`);
-                setIsSuccess(true);
-                window.scrollTo(0, 0);
+                // DB me kuch save nahi hua — sirf token se agla page
+                navigate(`/web-hosting-details?token=${encodeURIComponent(data.token)}`);
             } else {
                 setCaptchaError(data.message || "Failed to submit the order. Please try again.");
             }
@@ -575,7 +573,7 @@ export default function OrderNowPage() {
                             <Server className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                             <input
                               type="text"
-                           
+                                                          required
                               placeholder="xyz.yourcompany.com"
                               value={serverName}
                               onChange={(e) => setServerName(e.target.value)}
@@ -592,7 +590,7 @@ export default function OrderNowPage() {
                             <Globe className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                             <input
                               type="text"
-                         
+                                                              required
                               placeholder="e.g. yourcompany.com"
                               value={domain}
                               onChange={(e) => setDomain(e.target.value)}
@@ -618,7 +616,7 @@ export default function OrderNowPage() {
                         </label>
                         <input
                           type="text"
-                        
+                                                  required
                           value={companyName}
                           onChange={(e) => setCompanyName(e.target.value)}
                           className="w-full h-11 px-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -634,7 +632,7 @@ export default function OrderNowPage() {
                           <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                           <input
                             type="text"
-                            
+                                                      required
                             value={isServerPlan ? contactPersonName : yourName}
                             onChange={(e) => isServerPlan ? setContactPersonName(e.target.value) : setYourName(e.target.value)}
                             className="w-full h-11 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -652,7 +650,7 @@ export default function OrderNowPage() {
                           <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                           <input
                             type="email"
-                           
+                                                      required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             className="w-full h-11 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -667,7 +665,7 @@ export default function OrderNowPage() {
                           <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                           <input
                             type="tel"
-                             
+                                                      required
                             value={contactNo}
                             onChange={(e) => setContactNo(e.target.value)}
                             className="w-full h-11 pl-10 pr-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -815,7 +813,8 @@ export default function OrderNowPage() {
                               *Operating System
                             </label>
                             <select
-                              value={operatingSystem}
+                                                          value={operatingSystem}
+                                                          required
                               onChange={(e) => setOperatingSystem(e.target.value)}
                               className="w-full h-11 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
                             >
@@ -845,7 +844,8 @@ export default function OrderNowPage() {
                             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                               *Payment Cycle
                             </label>
-                            <select
+                                                      <select
+                                                          required
                               value={paymentTerm}
                               onChange={(e) => setPaymentTerm(e.target.value)}
                               className="w-full h-11 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -871,7 +871,8 @@ export default function OrderNowPage() {
                             <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                               *Control Panel Options
                             </label>
-                            <select
+                                                      <select
+                                                          required
                               value={controlPanelOption}
                               onChange={(e) => setControlPanelOption(e.target.value)}
                               className="w-full h-11 px-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200"
@@ -907,7 +908,8 @@ export default function OrderNowPage() {
                           </label>
                           <textarea
                             rows={3}
-                            value={specialInstructions}
+                                                      value={specialInstructions}
+                                                      required
                             onChange={(e) => setSpecialInstructions(e.target.value)}
                             className="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200 resize-none"
                           />
@@ -939,7 +941,8 @@ export default function OrderNowPage() {
                             Comments
                           </label>
                           <textarea
-                            rows={3}
+                                                          rows={3}
+                                                          required
                             value={comments}
                             onChange={(e) => setComments(e.target.value)}
                             className="w-full px-3.5 py-3 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200 resize-none"
@@ -959,6 +962,7 @@ export default function OrderNowPage() {
                         <div className="flex items-center justify-center gap-1.5 px-4 h-11 rounded-lg bg-slate-800 text-white font-mono font-black text-sm tracking-wide select-none">
                           <span>{captchaNum1}</span>
                           <span>+</span>
+
                           <span>{captchaNum2}</span>
                           <span>=</span>
                         </div>

@@ -23,8 +23,7 @@ namespace Dotsandcoms_in.Server.DTOs
         [Required]
         public string Message { get; set; }
 
-        [Required]
-        public string RecaptchaToken { get; set; }
+     
 
     }
 }

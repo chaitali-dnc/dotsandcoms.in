@@ -14,7 +14,10 @@
         public string State { get; set; }
         public string Country { get; set; }
         public string Comments { get; set; }
-
+        public decimal SetupCharge { get; set; }
+        public decimal DbAddonPrice { get; set; }
+        public decimal Discount { get; set; }
+        public string City { get; set; } = "";
         public bool IsServerPlan { get; set; }
         public decimal TotalPrice { get; set; }
 

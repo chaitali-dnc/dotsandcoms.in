@@ -17,6 +17,8 @@ builder.Configuration.GetSection("EmailSettings"));
 
 builder.Services.AddScoped<IEmailService,EmailService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<ILegacyTokenService, LegacyTokenService>();
 builder.Services.AddHttpClient();
 builder.Services.AddCors(options =>
 {

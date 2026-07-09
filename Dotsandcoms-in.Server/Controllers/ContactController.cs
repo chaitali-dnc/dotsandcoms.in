@@ -37,40 +37,7 @@ namespace Dotsandcoms_in.Server.Controllers
                 if (!ModelState.IsValid)
                     return BadRequest(ModelState);
 
-                //---------------------------------------
-                // Google reCAPTCHA Verify
-                //---------------------------------------
-
-                //var secretKey = _configuration["GoogleReCaptcha:SecretKey"];
-
-                //var client = _httpClientFactory.CreateClient();
-
-                //var values = new Dictionary<string, string>
-                //{
-                //    { "secret", secretKey },
-                //    { "response", model.RecaptchaToken }
-                //};
-
-                //var response = await client.PostAsync(
-                //    "https://www.google.com/recaptcha/api/siteverify",
-                //    new FormUrlEncodedContent(values));
-
-                //var captcha =
-                //    await response.Content.ReadFromJsonAsync<GoogleCaptchaResponse>();
-
-                //if (captcha == null || !captcha.Success)
-                //{
-                //    return BadRequest(new
-                //    {
-                //        success = false,
-                //        message = "Captcha verification failed."
-                //    });
-                //}
-
-                //---------------------------------------
-                // Client IP
-                //---------------------------------------
-
+                
                 string ipAddress =
                     HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
 

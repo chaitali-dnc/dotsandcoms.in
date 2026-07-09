@@ -4,6 +4,8 @@ namespace Dotsandcoms_in.Server.Services
 {
     public interface IOrderService
     {
-        Task<int> PlaceOrderAsync(OrderRequestDto dto, string ipAddress);
+        Task<(string OrderRef, string Token)> PlaceOrderAsync(OrderRequestDto dto, string ipAddress);
+        OrderTokenPayload DecodeToken(string token);
+        string BuildCcavenueRedirectToken(string token, out string orderRef);
     }
 }

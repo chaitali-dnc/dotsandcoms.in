@@ -1,8 +1,8 @@
 import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, CheckCircle, Search, Gauge, Link2, ShieldAlert, Sparkles, Loader2, ArrowRight } from "lucide-react";
+import { X, CheckCircle, Search, Gauge, Link2, ShieldAlert, RefreshCw, Sparkles, Loader2, ArrowRight } from "lucide-react";
 import axios from "axios";
-import ReCAPTCHA from "react-google-recaptcha";
+ 
 
 export default function AuditModal({ isOpen, onClose }) {
   const [name, setName] = useState("");
@@ -13,6 +13,10 @@ export default function AuditModal({ isOpen, onClose }) {
     const API_URL = "https://localhost:7248/api/audit/send";
     const [error, setError] = useState("");
     const [captchaToken, setCaptchaToken] = useState("");
+    const [captchaNum1, setCaptchaNum1] = useState(0);
+    const [captchaNum2, setCaptchaNum2] = useState(0);
+    const [captchaAnswer, setCaptchaAnswer] = useState("");
+    const [captchaError, setCaptchaError] = useState("");
   // Lock/unlock background scroll whenever isOpen changes.
   useEffect(() => {
     if (!isOpen) return;
@@ -33,16 +37,38 @@ export default function AuditModal({ isOpen, onClose }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]); // NOTE: intentionally NOT depending on onClose.
 
+
+    const generateCaptcha = () => {
+        setCaptchaNum1(Math.floor(Math.random() * 9) + 1);
+        setCaptchaNum2(Math.floor(Math.random() * 9) + 1);
+        setCaptchaAnswer("");
+        setCaptchaError("");
+    };
+
+    useEffect(() => {
+        generateCaptcha();
+    }, []);
+
     const handleSubmit = async (e) => {
 
         e.preventDefault();
 
         if (!name || !email || !url)
             return;
-        if (!captchaToken) {
-            setError("Please verify the captcha.");
+        //if (!captchaToken) {
+        //    setError("Please verify the captcha.");
+        //    return;
+        //}
+
+        setCaptchaError("");
+
+        // Validate Math Captcha
+        const expected = captchaNum1 + captchaNum2;
+        if (parseInt(captchaAnswer) !== expected) {
+            setCaptchaError("Incorrect captcha numeric value. Please try again.");
             return;
         }
+
 
         try {
 
@@ -79,9 +105,9 @@ export default function AuditModal({ isOpen, onClose }) {
 
                     email,
 
-                    websiteUrl: url,
+                    websiteUrl: url
 
-                    recaptchaToken: captchaToken
+                    
 
                 });
 
@@ -96,39 +122,42 @@ export default function AuditModal({ isOpen, onClose }) {
             setUrl("");
 
         }
-
         catch (error) {
-
             console.log(error);
 
-            setError(
+            const data = error.response?.data;
+            let msg = "Unable to submit.";
 
-                error.response?.data ||
+            if (typeof data === "string") {
+                msg = data;
+            } else if (data?.errors) {
+                // ValidationProblemDetails -> errors: { Field: ["msg1","msg2"] }
+                msg = Object.values(data.errors).flat().join(" ");
+            } else if (data?.title) {
+                msg = data.title;
+            }
 
-                "Unable to submit."
-
-            );
-
+            setError(msg);
             setStatus("idle");
-
         }
+        //catch (error) {
+
+        //    console.log(error);
+
+        //    setError(
+
+        //        error.response?.data ||
+
+        //        "Unable to submit."
+
+        //    );
+
+        //    setStatus("idle");
+
+        //}
 
     };
-  //const handleSubmit = (e) => {
-  //  e.preventDefault();
-  //  if (!name || !url || !email) return;
-
-  //  setStatus("loading");
-
-  //  // Simulate API request
-  //  setTimeout(() => {
-  //    setStatus("success");
-  //    setName("");
-  //    setUrl("");
-  //    setEmail("");
-  //  }, 2000);
-  //};
-
+ 
   const handleReset = () => {
     setStatus("idle");
     onClose();
@@ -341,13 +370,50 @@ text-sm">
                           className="w-full bg-slate-50 border border-slate-250 focus:border-[#dc2626] focus:bg-white rounded-xl px-4 py-3 text-sm text-slate-800 focus:outline-none transition-all duration-300 disabled:opacity-50"
                         />
                                                 </div>
-                                                <div className="flex justify-center">
-                                                    <ReCAPTCHA
-                                                        sitekey="6LfI8UorAAAAAEYCSGi7M3B_fNgAJlyGbNd7A1Zn"
-                                                        onChange={(token) => setCaptchaToken(token)}
-                                                    />
-                                                </div>
+                                                <div className="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center gap-6">
+                                                    <div className="w-full sm:w-auto flex flex-col gap-1.5">
+                                                        <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider">
+                                                            *Verify Math Check
+                                                        </label>
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="flex items-center justify-center gap-1.5 px-4 h-11 rounded-lg bg-slate-800 text-white font-mono font-black text-sm tracking-wide select-none">
+                                                                <span>{captchaNum1}</span>
+                                                                <span>+</span>
 
+                                                                <span>{captchaNum2}</span>
+                                                                <span>=</span>
+                                                            </div>
+                                                            <input
+                                                                type="number"
+
+                                                                placeholder="Answer"
+                                                                value={captchaAnswer}
+                                                                onChange={(e) => setCaptchaAnswer(e.target.value)}
+                                                                className="w-28 h-11 text-center bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-800 outline-none focus:bg-white focus:border-[#dc2626] transition-all duration-200 font-mono font-bold"
+                                                            />
+                                                            <button
+                                                                type="button"
+                                                                onClick={generateCaptcha}
+                                                                className="p-2.5 text-slate-400 hover:text-slate-600 hover:bg-slate-100 rounded-lg transition-all"
+                                                                title="Refresh Captcha"
+                                                            >
+                                                                <RefreshCw className="w-4 h-4" />
+                                                            </button>
+                                                        </div>
+                                                        <span className="text-[10px] text-slate-400 font-mono">
+                                                            capcha verification
+                                                        </span>
+                                                    </div>
+
+                                                    
+                                                </div>
+                                                <div className="space-y-1">
+                                                    {captchaError && (
+                                                        <p className="text-xs text-[#dc2626] font-semibold mb-2">{captchaError}</p>
+                                                    )}
+
+
+                                                </div>
                       {/* Submit Button */}
                       <button
                         type="submit"

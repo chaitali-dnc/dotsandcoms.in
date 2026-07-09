@@ -14,7 +14,6 @@ namespace Dotsandcoms_in.Server.DTOs
         [Required]
         public string WebsiteUrl { get; set; }
 
-        [Required]
-        public string RecaptchaToken { get; set; }
+         
     }
 }
