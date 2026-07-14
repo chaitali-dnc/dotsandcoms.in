@@ -4,47 +4,65 @@ const PARTNERS = [
     {
         name: "Alembic Pharmaceuticals",
         url: "https://alembicpharmaceuticals.com/",
-        logo: "/alembic-icon.svg"
+        logo: "/alembic-icon.svg",
+        width: 127,
+        height: 51
     },
     {
         name: "Gujarat Badminton Association",
         url: "https://www.gujaratbadminton.org/",
-        logo: "/gujarat-badminton-association-sports-club.svg"
+        logo: "/gujarat-badminton-association-sports-club.svg",
+        width: 120,
+        height: 79
     },
     {
         name: "Rubamin",
         url: "https://www.rubamin.com/",
-        logo: "/rubamin-chemical-company-vadodara.svg"
+        logo: "/rubamin-chemical-company-vadodara.svg",
+        width: 134,
+        height: 39
     },
     {
         name: "Nilkanth Group",
         url: "https://www.nilkanthgroup.co.in",
-        logo: "/nilkanth-group-vadodara-business.svg"
+        logo: "/nilkanth-group-vadodara-business.svg",
+        width: 120,
+        height: 64
     },
     {
         name: "JR Group",
         url: "https://www.jrgroup.co.in/",
-        logo: "/jr-industries-vadodara-manufacturing.svg"
+        logo: "/jr-industries-vadodara-manufacturing.svg",
+        width: 120,
+        height: 55
     },
     {
         name: "GIPCL",
         url: "https://www.gipcl.com",
-        logo: "/gipcl-energy-company-gujarat-power.svg"
+        logo: "/gipcl-energy-company-gujarat-power.svg",
+        width: 116,
+        height: 110
     },
     {
         name: "Book Pratha",
         url: "https://www.bookpratha.com/",
-        logo: "/bookpratha-online-bookstore-india.svg"
+        logo: "/bookpratha-online-bookstore-india.svg",
+        width: 121,
+        height: 47
     },
     {
         name: "Memorify",
         url: "https://www.memorify.world/",
-        logo: "/memorify-learning-app-education.svg"
+        logo: "/memorify-learning-app-education.svg",
+        width: 137,
+        height: 73
     },
     {
         name: "Bankers Heart",
         url: "https://www.bankersheart.com/",
-        logo: "/client-logos-banner-vadodara-company.svg"
+        logo: "/client-logos-banner-vadodara-company.svg",
+        width: 133,
+        height: 116
     }
 ];
 
@@ -100,6 +118,8 @@ export default function ClientNetwork() {
                                     alt={`${partner.name} Logo`}
                                     className="max-h-12 max-w-[140px] object-contain pointer-events-none"
                                     loading="lazy"
+                                    width={partner.width}
+                                    height={partner.height}
                                 />
                             </a>
                         ))}
@@ -131,6 +151,8 @@ export default function ClientNetwork() {
                                     alt={`${partner.name} Logo`}
                                     className="max-h-12 max-w-[140px] object-contain pointer-events-none"
                                     loading="lazy"
+                                    width={partner.width}
+                                    height={partner.height}
                                 />
                             </a>
                         ))}

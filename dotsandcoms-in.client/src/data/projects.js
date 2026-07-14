@@ -49,7 +49,7 @@ export const projects = [
   },
   {
     id: 6,
-    title: "Book Pratha",
+    title: "Book Pratha E-Commerce",
     location: "Bhavnagar, India",
     category: "Web Design",
     link: "https://www.bookpratha.com/",
@@ -157,7 +157,7 @@ export const projects = [
   },
   {
     id: 14,
-    title: "Book Pratha",
+    title: "Book Pratha App",
     category: "Mobile Apps",
     link: "https://play.google.com/store/apps/details?id=prathambooks.bookpratha&pcampaignid=web_share",
     webp: iosAppImg,

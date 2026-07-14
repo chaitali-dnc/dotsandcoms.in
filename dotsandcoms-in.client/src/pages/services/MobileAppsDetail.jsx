@@ -7,7 +7,7 @@ import { subServices, bannerData, ctaData } from "../../data/mobileApps";
 import { setPageSEO } from "../../utils/seo";
 
 // Reusable 3D Tilt Card component with layered offset backing
-function TiltCard({ src, alt, offsetBorder, glowColor }) {
+function TiltCard({ src, alt, offsetBorder, glowColor, width, height }) {
   return (
     <div className="w-full relative py-6 px-6" style={{ perspective: 1200 }}>
       {/* Decorative Offset Backing Card */}
@@ -32,6 +32,8 @@ function TiltCard({ src, alt, offsetBorder, glowColor }) {
           alt={alt}
           className="w-full h-auto object-cover select-none block"
           loading="lazy"
+          width={width}
+          height={height}
           style={{ transform: "translateZ(20px)" }}
         />
         {/* Soft gloss hover highlight */}
@@ -122,6 +124,8 @@ export default function MobileAppsDetail() {
                         alt={sub.alt || `${sub.title} - iOS and Android Mobile App Development Vadodara | Dots & Coms`} 
                         offsetBorder={sub.offsetBorder}
                         glowColor={sub.glowColor}
+                        width={sub.width}
+                        height={sub.height}
                       />
                     </div>
                   </div>

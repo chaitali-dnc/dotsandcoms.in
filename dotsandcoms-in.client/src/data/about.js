@@ -37,6 +37,8 @@ export const aboutHeroData = {
       title: "Creative Solutions Studio",
       location: "Dots and Coms",
       desc: "Our creative design division developing state-of-the-art corporate web designs in Vadodara.",
+      width: 2200,
+      height: 1646
     },
     {
       id: 2,
@@ -44,6 +46,8 @@ export const aboutHeroData = {
       title: "Team Cricket Outing",
       location: "Dots and Coms Team",
       desc: "Our Team enjoying a fun cricket match during our outdoor team activity.",
+      width: 1668,
+      height: 1122
     },
     {
       id: 3,
@@ -51,6 +55,8 @@ export const aboutHeroData = {
       title: "Team Outing & Brunch",
       location: "Hyatt Celebration",
       desc: "Collaborating outside the office and celebrating major client deliverables together.",
+      width: 1080,
+      height: 800
     },
   ]
 };
@@ -114,31 +120,43 @@ export const teamSlides = [
     image: cricketTeam1,
     title: "Cricket Dots & Coms Team",
     desc: "Strengthening our bond and sportsmanship on the cricket field during our team outings.",
+    width: 1080,
+    height: 800
   },
   {
     image: teamBrunch,
     title: "Team Brunch at Hyatt",
     desc: "Celebrating company achievements and sharing laughter over a delightful weekend brunch.",
+    width: 1080,
+    height: 800
   },
   {
     image: expertDevelopers,
     title: "Expert Developers Vadodara",
     desc: "Our high-caliber technical division designing and building custom digital solutions.",
+    width: 1668,
+    height: 1122
   },
   {
     image: teamOuting,
     title: "Dots & Coms Team Outing",
     desc: "Stepping outside the workspace to connect, recharge, and inspire new ideas.",
+    width: 1080,
+    height: 800
   },
   {
     image: alembicCity,
     title: "Dots & Coms at Alembic City",
     desc: "A memorable gathering showcasing our close-knit office culture and team spirit.",
+    width: 1080,
+    height: 800
   },
   {
     image: cricketTeam2,
     title: "Cricket Outing - Part 2",
     desc: "Fostering collaboration, energy, and fun outside of our daily programming desks.",
+    width: 1080,
+    height: 800
   },
 ];
 
@@ -152,25 +170,37 @@ export const events = [
   {
     title: "Annual Excellence Awards 2025",
     image: corporateEventsImg,
+    width: 1632,
+    height: 964
   },
   {
     title: "Hong Kong Electronics Fair",
     image: teamBuildingImg,
+    width: 740,
+    height: 436
   },
   {
     title: "CeBIT Australia Exhibition",
     image: workplaceEnvironmentImg,
+    width: 740,
+    height: 436
   },
   {
     title: "India Trade Fair 2013, Dubai",
     image: businessMeetingImg,
+    width: 740,
+    height: 436
   },
   {
     title: "Mobile Monday Ahmedabad",
     image: companyCelebrationImg,
+    width: 740,
+    height: 436
   },
   {
     title: "Hong Kong Tech Expo",
     image: officeLifeImg,
+    width: 740,
+    height: 436
   },
 ];

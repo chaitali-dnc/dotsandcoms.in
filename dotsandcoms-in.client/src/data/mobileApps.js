@@ -26,6 +26,8 @@ export const subServices = [
       "Apple App Store Deployment & Search Optimization"
     ],
     image: iosImg,
+    width: 1586,
+    height: 992,
     glowColor: "bg-[#dc2626]/8",
     offsetBorder: "border-[#dc2626]/30"
   },
@@ -43,6 +45,8 @@ export const subServices = [
       "Google Play Store Deployment & Lifecycle Management"
     ],
     image: androidImg,
+    width: 1586,
+    height: 992,
     glowColor: "bg-[#ea580c]/8",
     offsetBorder: "border-[#ea580c]/30"
   },
@@ -60,6 +64,8 @@ export const subServices = [
       "Custom API Connections & Third-Party Plugin Support"
     ],
     image: flutterImg,
+    width: 1536,
+    height: 1024,
     glowColor: "bg-[#eab308]/6",
     offsetBorder: "border-[#eab308]/30"
   }

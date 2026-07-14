@@ -329,9 +329,9 @@ export default function Header() {
                   >
                     <div className="flex items-center space-x-2.5 text-white group-hover:text-[#dc2626] transition-colors">
                       <span className="text-[11px] font-mono text-white/20 group-hover:text-[#dc2626] transition-colors">0{i + 1}</span>
-                      <h2 className="text-xl lg:text-[28px] font-extrabold font-heading tracking-tight flex items-center leading-none">
+                      <div className="text-xl lg:text-[28px] font-extrabold font-heading tracking-tight flex items-center leading-none">
                         <span>{link.label} {link.label2}</span>
-                      </h2>
+                      </div>
                       <ChevronRight className="w-4 h-4 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-[#dc2626]" />
                     </div>
                     <p className="text-[11px] text-slate-400 mt-1 pl-5 group-hover:text-slate-300 transition-colors leading-normal">
@@ -352,10 +352,10 @@ export default function Header() {
                   transition={{ delay: 0.3 }}
                 >
                   <div className="absolute top-[-20%] right-[-20%] w-[120px] h-[120px] bg-[#dc2626]/5 rounded-full blur-2xl" />
-                  <h3 className="text-white text-[16px] font-mono uppercase tracking-widest border-b border-white/10 pb-1.5 mb-2 flex items-center justify-between">
+                  <div className="text-white text-[16px] font-mono uppercase tracking-widest border-b border-white/10 pb-1.5 mb-2 flex items-center justify-between">
                     <span>Our Ventures</span>
                     <Globe className="w-3 h-3 text-[#ea580c] animate-pulse" />
-                  </h3>
+                  </div>
 
                   <div className="space-y-1">
                     <a
@@ -365,7 +365,7 @@ export default function Header() {
                       className="flex items-center justify-between p-1 rounded-lg bg-white/0 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 group"
                     >
                       <div>
-                        <h4 className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors">Logo Design</h4>
+                        <div className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors">Logo Design</div>
                                               <p className="text-[11px] text-slate-400 mt-0.5">customlogodesigner.com</p>
                       </div>
                       <ArrowUpRight className="w-3 h-3 text-slate-505 group-hover:text-[#dc2626] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
@@ -378,7 +378,7 @@ export default function Header() {
                       className="flex items-center justify-between p-1 rounded-lg bg-white/0 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 group"
                     >
                       <div>
-                        <h4 className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors">Graphic design</h4>
+                        <div className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors">Graphic design</div>
                         <p className="text-[11px] text-slate-400 mt-0.5">brochuredesigncompany.com</p>
                       </div>
                       <ArrowUpRight className="w-3 h-3 text-slate-505 group-hover:text-[#dc2626] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
@@ -391,7 +391,7 @@ export default function Header() {
                       className="flex items-center justify-between p-1 rounded-lg bg-white/0 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 group"
                     >
                       <div className="max-w-[85%]">
-                                              <h4 className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors truncate"> Remote IT Workforce </h4>
+                                              <div className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors truncate"> Remote IT Workforce </div>
                                               <p className="text-[11px] text-slate-400 mt-0.5">remoteitworkforce.in</p>
                       </div>
                       <ArrowUpRight className="w-3 h-3 text-slate-505 group-hover:text-[#dc2626] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all flex-shrink-0" />
@@ -404,7 +404,7 @@ export default function Header() {
                       className="flex items-center justify-between p-1 rounded-lg bg-white/0 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-300 group"
                     >
                       <div>
-                                              <h4 className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors">For international</h4>
+                                              <div className="text-white text-[14px] font-bold group-hover:text-[#dc2626] transition-colors">For international</div>
                                               <p className="text-[11px] text-slate-400 mt-0.5">dotsandcoms.com</p>
                       </div>
                       <ArrowUpRight className="w-3 h-3 text-slate-505 group-hover:text-[#dc2626] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />

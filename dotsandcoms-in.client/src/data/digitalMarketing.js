@@ -35,6 +35,8 @@ export const subServices = [
       "Monthly SEO report with keyword rankings, traffic insights"
     ],
     image: seoImg,
+    width: 1502,
+    height: 1002,
     glowColor: "bg-[#dc2626]/8",
     offsetBorder: "border-[#dc2626]/30"
   },
@@ -58,6 +60,8 @@ export const subServices = [
       "Monthly report of activities and insights"
     ],
     image: socialImg,
+    width: 1502,
+    height: 1127,
     glowColor: "bg-[#ea580c]/8",
     offsetBorder: "border-[#ea580c]/30"
   },
@@ -80,6 +84,8 @@ export const subServices = [
       "Monthly report of activities and performance"
     ],
     image: analyticsImg,
+    width: 1500,
+    height: 1000,
     glowColor: "bg-[#eab308]/6",
     offsetBorder: "border-[#eab308]/30"
   }

@@ -132,6 +132,8 @@ export default function About() {
                           alt={slide.alt || `${slide.title} - Custom Web Design & Web Development Company in Vadodara`}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                           loading="lazy"
+                          width={slide.width}
+                          height={slide.height}
                         />
                         {/* Shadow/Glass Bottom overlay */}
                         <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-900/10 to-transparent opacity-90 transition-opacity duration-300" />

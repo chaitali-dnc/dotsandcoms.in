@@ -12,7 +12,9 @@ export default function FAQSection() {
     return (
         <section id="faq" className="relative py-16 sm:py-20 bg-slate-50/60">
             <div className="max-w-6xl mx-auto px-4 sm:px-6">
-                
+                <h2 className="text-2xl sm:text-3xl font-extrabold font-heading text-slate-800 text-center mb-10 tracking-tight">
+                    Frequently Asked Questions about our Services
+                </h2>
 
                 {/* Accordion list */}
                 <div className="space-y-3">

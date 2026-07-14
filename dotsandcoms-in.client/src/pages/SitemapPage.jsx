@@ -21,6 +21,7 @@ export default function SitemapPage() {
         subtitle="A comprehensive directory of pages, services, case studies, and corporate contact details at Dots & Coms."
         breadcrumbs={[{ label: "Sitemap" }]}
       />
+      <h2 className="sr-only">Corporate Directory and Website Map</h2>
       <SitemapGrid />
     </>
   );

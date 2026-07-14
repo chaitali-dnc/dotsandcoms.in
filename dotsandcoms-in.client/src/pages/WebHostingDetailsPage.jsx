@@ -58,6 +58,7 @@ export default function WebHostingDetailsPage() {
     if (loading) {
         return (
             <div className="min-h-[60vh] bg-white flex items-center justify-center p-6">
+                <h1 className="sr-only">Web Hosting Order Details</h1>
                 <Loader2 className="w-6 h-6 animate-spin text-[#dc2626]" />
             </div>
         );
@@ -70,7 +71,8 @@ export default function WebHostingDetailsPage() {
                     <div className="w-12 h-12 bg-amber-50 text-amber-500 rounded-full flex items-center justify-center mx-auto">
                         <AlertTriangle className="w-6 h-6" />
                     </div>
-                    <h2 className="text-lg font-bold text-slate-800">No Active Order Session</h2>
+                    <h1 className="text-lg font-bold text-slate-800">Web Hosting Order Details</h1>
+                    <h2 className="text-base font-semibold text-slate-600">No Active Order Session</h2>
                     <p className="text-sm text-slate-500">
                         {loadError || "We couldn't find any pending order details. Please fill out the configuration form first."}
                     </p>
@@ -168,9 +170,9 @@ export default function WebHostingDetailsPage() {
                         </div>
 
                         <div className="space-y-2 pt-2">
-                            <h3 className="font-black text-black text-lg border-b border-slate-200 pb-1 mb-3">
+                            <h2 className="font-black text-black text-lg border-b border-slate-200 pb-1 mb-3">
                                 Billing Information:
-                            </h3>
+                            </h2>
                             <div className="space-y-1.5">
                                 <p className="text-slate-700">Company Name: <span className="font-extrabold text-black ml-2">{companyName}</span></p>
                                 <p className="text-slate-700">Your Name: <span className="font-extrabold text-black ml-2">{yourName}</span></p>
@@ -204,9 +206,9 @@ export default function WebHostingDetailsPage() {
                         </div>
 
                         <div className="space-y-4 pt-4 border-t border-slate-100">
-                            <h3 className="font-bold text-slate-800">Payment methods:</h3>
+                            <h2 className="font-bold text-slate-800 text-base">Payment methods:</h2>
                             <div className="my-2 max-w-lg">
-                                <img src={paymentMethodsImg} alt="Payment Gateway Logos" className="w-full h-auto object-contain" />
+                                <img src={paymentMethodsImg} alt="Payment Gateway Logos" className="w-full h-auto object-contain" loading="lazy" width="1024" height="189" />
                             </div>
                             <div className="flex flex-col sm:flex-row gap-6 pt-2">
                                 {["Master Card", "Visa", "NetBanking"].map((method) => (

@@ -41,7 +41,7 @@ export default function TermsPage() {
             {/* Section: Terms & Conditions */}
             <div id="terms" className="space-y-6 scroll-mt-24">
               <h2 className="text-2xl md:text-3xl font-extrabold font-heading text-slate-800 tracking-tight border-b border-slate-100 pb-4">
-                Terms & Conditions
+                Our Terms & Conditions
               </h2>
               <div className="space-y-4 text-slate-600 text-sm md:text-[15px] leading-relaxed">
                 <p>

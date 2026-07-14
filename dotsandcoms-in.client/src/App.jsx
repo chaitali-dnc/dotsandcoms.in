@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from "react-router-dom";
 import { useEffect } from "react";
 import Home from "./components/Home";
-import Home2 from "./components/Home2";
 import ContactPage from "./pages/ContactPage";
 import AppLayout from "./layout/AppLayout";
 import FaqPage from "./pages/FaqPage";
@@ -83,7 +82,6 @@ function App() {
       <CanonicalLink />
       <Routes>
         <Route path="/" element={<Home />} />
-              <Route path="/home-2" element={<Home2 />} />   
               <Route element={<AppLayout />}>
                   <Route path="/about-web-development-company-baroda" element={<AboutPage />} />
                   <Route path="/website-mobile-app-development-company-portfolio-baroda" element={<WorkPage />} />
@@ -93,6 +91,8 @@ function App() {
                   <Route path="/windows-web-hosting-service-provider-baroda" element={<WebHostingDetail />} />
                   <Route path="/windows-and-linux-vps-server-hosting-gujarat" element={<Navigate to="/windows-web-hosting-service-provider-baroda" replace />} />
                   <Route path="/dedicated-server-hosting-cloud-hosting-vadodara" element={<Navigate to="/windows-web-hosting-service-provider-baroda" replace />} />
+                  <Route path="/dedicated-server-hosting-company-vadodara" element={<Navigate to="/windows-web-hosting-service-provider-baroda" replace />} />
+                  <Route path="/fee-seo-performance-web-site-audit" element={<Navigate to="/organic-seo-ppc-digital-marketing-vadodara" replace />} />
                   <Route path="/organic-seo-ppc-digital-marketing-vadodara" element={<DigitalMarketingDetail />} />
                   <Route path="/contact-webdesign-mobileapp-socialmedia-marketing-baroda" element={<ContactPage />} />
                   <Route path="/webhosting-vps-dedicated-server-support-baroda" element={<TechnicalSupportPage />} />

@@ -69,6 +69,8 @@ export default function KiiaraCaseStudyPage() {
                   src={imgBanner} 
                   alt="Kiiara Kreations Handmade Passion Brand" 
                   className="w-full h-auto object-cover"
+                  width="1024"
+                  height="1024"
                 />
               </div>
 
@@ -129,6 +131,8 @@ export default function KiiaraCaseStudyPage() {
                   src={imgBanner} 
                   alt="Kiiara Kreations Handmade Passion Brand" 
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  width="1024"
+                  height="1024"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
@@ -170,6 +174,9 @@ export default function KiiaraCaseStudyPage() {
                   src={imgChallenge} 
                   alt="Kiiara Kreations Creative Handmade Products" 
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  width="1024"
+                  height="1024"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
@@ -366,7 +373,7 @@ export default function KiiaraCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgWebDesign} alt="Custom Premium E-Commerce Website Design for Kiiara Kreations Handmade Products in Vadodara" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgWebDesign} alt="Custom Premium E-Commerce Website Design for Kiiara Kreations Handmade Products in Vadodara" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" loading="lazy" width="1500" height="938" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -433,7 +440,7 @@ export default function KiiaraCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgSeo} alt="E-Commerce Brand Organic SEO Growth and Client Acquisition Expansion Strategy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgSeo} alt="E-Commerce Brand Organic SEO Growth and Client Acquisition Expansion Strategy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" loading="lazy" width="1502" height="1002" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -488,7 +495,7 @@ export default function KiiaraCaseStudyPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="w-full md:w-5/12 rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative shrink-0">
-                <img src={imgLeadGen} alt="Global E-Commerce Logistics and International Customer Reach Expansion for Indian Brand" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                <img src={imgLeadGen} alt="Global E-Commerce Logistics and International Customer Reach Expansion for Indian Brand" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" loading="lazy" width="1024" height="1024" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
               <div className="space-y-4 text-left">

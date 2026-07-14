@@ -145,7 +145,7 @@ export function ContactForm() {
                     // Get in Touch
                 </span>
                 <h2 className="text-2xl md:text-3xl font-extrabold font-heading text-slate-800 tracking-tight mt-1">
-                    Contact Us
+                    Send a Message
                 </h2>
             </div>
 

@@ -19,7 +19,12 @@ try {
   const excludedPaths = new Set([
     '/sitemap',
     '/windows-and-linux-vps-server-hosting-gujarat',
-    '/dedicated-server-hosting-cloud-hosting-vadodara'
+    '/dedicated-server-hosting-cloud-hosting-vadodara',
+    '/dedicated-server-hosting-company-vadodara',
+    '/fee-seo-performance-web-site-audit',
+    '/thank-you',
+    '/home-2',
+    '/web-hosting-details'
   ]);
 
   while ((match = routeRegex.exec(content)) !== null) {

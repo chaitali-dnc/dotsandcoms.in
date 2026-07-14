@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
-import { ArrowUpRight, Globe, Smartphone, ShoppingBag, Sparkles, ExternalLink, Monitor, Layers } from "lucide-react";
+import { ArrowUpRight, Smartphone, ExternalLink, Monitor, Layers } from "lucide-react";
 import InnerBanner from "../components/ui/InnerBanner";
 import { projects } from "../data/projects";
 import { setPageSEO } from "../utils/seo";
@@ -12,17 +12,8 @@ const categories = [
   { id: "Mobile Apps", label: "Mobile Apps", icon: Smartphone }
 ];
 
-// Helper to convert hex to rgba
-const hexToRgba = (hex, alpha) => {
-  if (!hex || !hex.startsWith("#")) return `rgba(220, 38, 38, ${alpha})`;
-  const r = parseInt(hex.substring(1, 3), 16);
-  const g = parseInt(hex.substring(3, 5), 16);
-  const b = parseInt(hex.substring(5, 7), 16);
-  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
-};
-
 // Interactive 3D Card wrapper with cursor glow spotlight and magnetic translation layers
-function TiltCard({ project, children }) {
+function TiltCard({ children }) {
   const cardRef = useRef(null);
   const [hovered, setHovered] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -146,9 +137,8 @@ function TiltCard({ project, children }) {
   );
 }
 
-function ProjectCard({ project, idx, activeTab }) {
+function ProjectCard({ project }) {
   const [isHovered, setIsHovered] = useState(false);
-  const [linkHovered, setLinkHovered] = useState(false);
   const videoRef = useRef(null);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -173,14 +163,20 @@ function ProjectCard({ project, idx, activeTab }) {
   }, [isHovered]);
 
   const isMobileApp = project.category === "Mobile Apps";
+  const isExternal = project.link.startsWith("http");
+  const LinkComp = isExternal ? "a" : Link;
+  const linkProps = isExternal 
+    ? { href: project.link, target: "_blank", rel: "noopener noreferrer" }
+    : { to: project.link };
 
   return (
-    <div
+    <LinkComp
+      {...linkProps}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="h-full"
+      className="h-full block no-underline text-inherit"
     >
-      <TiltCard project={project}>
+      <TiltCard>
         {/* Image Layer - Nested inside overflow hidden */}
         <div 
           className={`w-full overflow-hidden relative z-0 flex items-center justify-center ${
@@ -215,31 +211,23 @@ function ProjectCard({ project, idx, activeTab }) {
                     : "w-full h-full object-contain object-top block bg-white"
                 }`}
                 loading="lazy"
+                width={isMobileApp ? 1000 : 1500}
+                height={isMobileApp ? 1000 : 1000}
               />
             </picture>
           )}
 
           {/* Floating Action Link Badge - Video remains completely visible on hover! */}
-          {(() => {
-            const isExternal = project.link.startsWith("http");
-            const LinkComp = isExternal ? "a" : Link;
-            const linkProps = isExternal 
-              ? { href: project.link, target: "_blank", rel: "noopener noreferrer" }
-              : { to: project.link };
-            return (
-              <LinkComp
-                {...linkProps}
-                className="absolute top-6 right-4 z-20 px-3.5 py-1.5 rounded-full bg-[#dc2626] text-white text-[10px] font-extrabold uppercase tracking-widest flex items-center space-x-1.5 shadow-lg shadow-red-500/30 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-red-700 hover:scale-105"
-              >
-                <span>
-                  {isExternal 
-                    ? (project.category === "Mobile Apps" ? "View App" : "Live Site") 
-                    : "Case Study"}
-                </span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </LinkComp>
-            );
-          })()}
+          <div
+            className="absolute top-6 right-4 z-20 px-3.5 py-1.5 rounded-full bg-[#dc2626] text-white text-[10px] font-extrabold uppercase tracking-widest flex items-center space-x-1.5 shadow-lg shadow-red-500/30 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:bg-red-700 hover:scale-105"
+          >
+            <span>
+              {isExternal 
+                ? (project.category === "Mobile Apps" ? "View App" : "Live Site") 
+                : "Case Study"}
+            </span>
+            <ExternalLink className="w-3.5 h-3.5" />
+          </div>
         </div>
 
         {/* Meta Card Details */}
@@ -288,35 +276,23 @@ function ProjectCard({ project, idx, activeTab }) {
             style={isMobile ? {} : { transform: "translateZ(15px)" }}
             className="w-full pt-4 mt-4 border-t border-slate-100 flex items-center justify-between"
           >
-            {(() => {
-              const isExternal = project.link.startsWith("http");
-              const LinkComp = isExternal ? "a" : Link;
-              const linkProps = isExternal 
-                ? { href: project.link, target: "_blank", rel: "noopener noreferrer" }
-                : { to: project.link };
-              return (
-                <LinkComp
-                  {...linkProps}
-                  onMouseEnter={() => setLinkHovered(true)}
-                  onMouseLeave={() => setLinkHovered(false)}
-                  className="inline-flex items-center space-x-2 text-xs font-extrabold uppercase tracking-widest transition-colors duration-300"
-                  style={{
-                    color: linkHovered ? "#b91c1c" : "#dc2626"
-                  }}
-                >
-                  <span>
-                    {isExternal 
-                      ? (project.category === "Mobile Apps" ? "Get App" : "Explore Project") 
-                      : "Read Case Study"}
-                  </span>
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" />
-                </LinkComp>
-              );
-            })()}
+            <div
+              className="inline-flex items-center space-x-2 text-xs font-extrabold uppercase tracking-widest transition-colors duration-300"
+              style={{
+                color: isHovered ? "#b91c1c" : "#dc2626"
+              }}
+            >
+              <span>
+                {isExternal 
+                  ? (project.category === "Mobile Apps" ? "Get App" : "Explore Project") 
+                  : "Read Case Study"}
+              </span>
+              <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-0.5" />
+            </div>
           </div>
         </div>
       </TiltCard>
-    </div>
+    </LinkComp>
   );
 }
 
@@ -360,7 +336,9 @@ export default function WorkPage() {
         <div className="max-w-7xl mx-auto px-6 lg:px-12">
           {/* Centered filter tabs and stats panel */}
           <div className="flex flex-col items-center justify-center space-y-8 mb-10 md:mb-20">
-           
+            <h2 className="text-2xl md:text-3xl font-extrabold font-heading text-slate-800 text-center tracking-tight">
+              Featured Web Design and Mobile App Development Projects
+            </h2>
 
             {/* Mobile Dropdown Category Selector */}
             <div className="md:hidden w-full max-w-xs mx-auto relative">
@@ -441,8 +419,6 @@ export default function WorkPage() {
                 >
                   <ProjectCard
                     project={project}
-                    idx={idx}
-                    activeTab={activeTab}
                   />
                 </motion.div>
               ))}

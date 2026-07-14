@@ -171,6 +171,9 @@ export default function TeamSection() {
                       alt={teamSlides[activeIndex].alt || `${teamSlides[activeIndex].title} - Dots & Coms Development Team Baroda`}
                       className="w-full h-full object-cover cursor-zoom-in"
                       onClick={() => setIsLightboxOpen(true)}
+                      loading="lazy"
+                      width={teamSlides[activeIndex].width}
+                      height={teamSlides[activeIndex].height}
                     />
                   </motion.div>
                 </AnimatePresence>
@@ -272,6 +275,9 @@ export default function TeamSection() {
                   src={teamSlides[activeIndex].image}
                   alt={teamSlides[activeIndex].alt || `${teamSlides[activeIndex].title} - Dots & Coms Development Team Baroda`}
                   className="max-w-full max-h-[75vh] rounded-xl object-contain shadow-2xl border border-white/10"
+                  loading="lazy"
+                  width={teamSlides[activeIndex].width}
+                  height={teamSlides[activeIndex].height}
                 />
 
                 {/* Left Arrow */}

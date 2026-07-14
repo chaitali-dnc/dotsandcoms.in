@@ -69,6 +69,8 @@ export default function OneLifeCaseStudyPage() {
                   src={imgBanner} 
                   alt="1Life Expand From Regional Impact to National Reach" 
                   className="w-full h-auto object-cover"
+                  width="1024"
+                  height="1024"
                 />
               </div>
 
@@ -104,6 +106,8 @@ export default function OneLifeCaseStudyPage() {
                   src={imgBanner} 
                   alt="1Life Expand From Regional Impact to National Reach" 
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  width="1024"
+                  height="1024"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
@@ -145,6 +149,9 @@ export default function OneLifeCaseStudyPage() {
                   src={imgChallenge} 
                   alt="1Life Regional Digital Footprint" 
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  width="1024"
+                  height="1024"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
@@ -232,6 +239,9 @@ export default function OneLifeCaseStudyPage() {
                   src={imgApproach} 
                   alt="Our Approach at Dots & Coms" 
                   className="w-full h-auto object-cover"
+                  loading="lazy"
+                  width="1024"
+                  height="1024"
                 />
               </div>
 
@@ -288,6 +298,9 @@ export default function OneLifeCaseStudyPage() {
                   src={imgApproach} 
                   alt="Our Approach at Dots & Coms" 
                   className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
+                  width="1024"
+                  height="1024"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
@@ -326,7 +339,7 @@ export default function OneLifeCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgAudience} alt="User Persona Research and Target Audience mapping for Mental Health Organization" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgAudience} alt="User Persona Research and Target Audience mapping for Mental Health Organization" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" loading="lazy" width="1024" height="1024" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -372,7 +385,7 @@ export default function OneLifeCaseStudyPage() {
             >
               <div className="space-y-6">
                 <div className="rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative">
-                  <img src={imgWebDesign} alt="Non-Profit Custom Web Redesign and Accessible User Interface by Dots & Coms" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                  <img src={imgWebDesign} alt="Non-Profit Custom Web Redesign and Accessible User Interface by Dots & Coms" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" loading="lazy" width="1500" height="938" />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
                 </div>
                 <div className="space-y-3 text-left">
@@ -430,7 +443,7 @@ export default function OneLifeCaseStudyPage() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               <div className="w-full md:w-5/12 rounded-xl overflow-hidden aspect-[16/10] border border-slate-100 relative shrink-0">
-                <img src={imgSeo} alt="National Organic SEO Campaign and Content Strategy for Counseling NGO" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" />
+                <img src={imgSeo} alt="National Organic SEO Campaign and Content Strategy for Counseling NGO" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-103" loading="lazy" width="1502" height="1002" />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/20 via-transparent to-transparent pointer-events-none" />
               </div>
               <div className="space-y-4 text-left">
@@ -485,9 +498,9 @@ export default function OneLifeCaseStudyPage() {
               Results Achieved
             </h2>
             <div className="w-12 h-1 bg-[#dc2626] mx-auto mt-4 rounded-full" />
-            <h6 className="mt-3 text-center text-slate-600 font-semibold italic text-sm md:text-base">
+            <p className="mt-3 text-center text-slate-600 font-semibold italic text-sm md:text-base">
               The transformation produced significant measurable outcomes.
-            </h6>
+            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

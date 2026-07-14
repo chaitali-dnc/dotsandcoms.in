@@ -15,7 +15,7 @@ export const subServices = [
   {
     id: "website-design",
     num: "01",
-    title: "Website Design",
+    title: "Custom Website Design",
     subtitle: "Website Design & UI/UX",
     desc: "We create visually appealing, user-friendly websites focused on seamless navigation and strong UI/UX. Our designs are fully responsive, brand-consistent, and optimized for performance. By understanding user behavior, we build digital experiences that improve engagement and conversions.",
     features: [
@@ -26,6 +26,8 @@ export const subServices = [
       "Conversion Rate Optimization (CRO)"
     ],
     image: designImg,
+    width: 1500,
+    height: 938,
     glowColor: "bg-[#dc2626]/8",
     offsetBorder: "border-[#dc2626]/30"
   },
@@ -43,6 +45,8 @@ export const subServices = [
       "Scalable Backend Architectures"
     ],
     image: ecommerceImg,
+    width: 1500,
+    height: 1000,
     glowColor: "bg-[#ea580c]/8",
     offsetBorder: "border-[#ea580c]/30"
   },
@@ -60,6 +64,8 @@ export const subServices = [
       "API Integrations & Custom Web Services"
     ],
     image: customImg,
+    width: 1500,
+    height: 1000,
     glowColor: "bg-[#eab308]/6",
     offsetBorder: "border-[#eab308]/30"
   }
