@@ -43,11 +43,12 @@ var app = builder.Build();
 
 app.UseCors("ReactPolicy");
 
-// Add security headers to defend against click-jacking and MIME type sniffing
+// Add security headers to defend against click-jacking, MIME type sniffing, and enforce HSTS
 app.Use(async (context, next) =>
 {
     context.Response.Headers["X-Frame-Options"] = "SAMEORIGIN";
     context.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    context.Response.Headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains; preload";
     await next();
 });
 
